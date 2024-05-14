@@ -29,9 +29,13 @@ class MyApp extends StatelessWidget {
       title: 'Info Screen',
       debugShowCheckedModeBanner: false,
       theme: AppTheme().getTheme(),
-      home: InfoScreen(
-        title: 'Pantalla Informativa',
-      ),
+      initialRoute: '/',
+      routes: {
+        '/': (context) => LoginScreen(),
+        '/info': (context) => InfoScreen(
+              title: '',
+            ),
+      },
     );
   }
 }

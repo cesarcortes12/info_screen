@@ -153,6 +153,7 @@ class _LoginForm extends StatelessWidget {
                 text: 'Ingresar',
                 onPressed: () async {
                   //GoRouter.of(context).go('/');
+                  Navigator.pushNamed(context, '/info');
 
                   if (!loginFormBloc.state.isPosting) {
                     loginFormBloc.onSumit();
