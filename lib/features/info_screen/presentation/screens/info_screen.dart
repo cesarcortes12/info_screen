@@ -9,7 +9,7 @@ import 'package:flutter/widgets.dart';
 List<Map<String, String>> infoList = [
   {
     'placa': 'ABC123',
-    'nombre': 'Cesar Augusto Cortes zapata ',
+    'nombre': 'Cesar Augusto Cortes zapata',
     'asignado_a': 'Juan Pérez ',
     'hora_entrega': '10:00 AM',
     'estado': 'En orden De taller'
@@ -57,7 +57,7 @@ entregado
 Color getColorForStatus(String state) {
   switch (state.toLowerCase()) {
     case 'en orden de taller':
-      return const Color.fromARGB(255, 85, 108, 237);
+      return Color.fromARGB(255, 102, 122, 238);
 
     case 'en ejecucion':
       return Color.fromARGB(205, 253, 186, 0);
@@ -130,7 +130,7 @@ class _CardInfo extends StatelessWidget {
                     margin: EdgeInsets.symmetric(vertical: 10),
                     width: size.width * 0.4,
                     decoration: BoxDecoration(
-                      color: Color.fromARGB(255, 4, 67, 160),
+                      color: Color(0xFF0443A0),
                       borderRadius: BorderRadius.circular(10),
                     ),
                     child: Row(
@@ -146,15 +146,21 @@ class _CardInfo extends StatelessWidget {
                               children: [
                                 ListTile(
                                     title: Text('Placa : ${info['placa']}',
-                                        style: TextStyle(color: Colors.white)),
+                                        style: TextStyle(
+                                            color: Colors.white,
+                                            fontSize: 20,
+                                            fontWeight: FontWeight.bold)),
                                     subtitle: Column(
                                         crossAxisAlignment:
                                             CrossAxisAlignment.start,
                                         children: [
                                           SizedBox(height: 6),
-                                          Text('Nombre: ${info['nombre']}',
-                                              style: TextStyle(
-                                                  color: Colors.white)),
+                                          Text(
+                                            'Nombre: ${info['nombre']}',
+                                            style: TextStyle(
+                                                color: Colors.white,
+                                                fontSize: 18),
+                                          ),
                                           SizedBox(height: 6),
                                           Text(
                                               'Asignado a: ${info['asignado_a']}',
@@ -211,7 +217,7 @@ class _CardInfo2 extends StatelessWidget {
           Stack(children: [
             Container(
               width: size.width * 0.9,
-              height: 500,
+              height: size.height * 0.65,
               decoration: BoxDecoration(
                 boxShadow: [
                   BoxShadow(
@@ -259,8 +265,7 @@ class _CardInfo2 extends StatelessWidget {
                             Text(
                               'PLACA',
                               style: TextStyle(
-                                fontSize: constraints.maxWidth *
-                                    0.2, // Ajuste dinámico del tamaño del texto
+                                fontSize: constraints.maxWidth * 0.2,
                                 fontWeight: FontWeight.bold,
                                 color: Color(0xFF000000),
                               ),
@@ -279,7 +284,6 @@ class _CardInfo2 extends StatelessWidget {
                             ),
                           ],
                         );
-                        
                       },
                     ),
                   ),
@@ -287,11 +291,11 @@ class _CardInfo2 extends StatelessWidget {
               ),
             ),
             Positioned(
-              right: 20,
-              top: 130,
+              right: size.width * 0.02,
+              top: size.height * 0.15,
               child: Container(
                 width: size.width * 0.25,
-                height: 280,
+                height: size.width * 0.15,
                 decoration: BoxDecoration(
                   color: Color.fromARGB(255, 255, 255, 255).withOpacity(0.8),
                   borderRadius: BorderRadius.circular(10),
@@ -309,47 +313,43 @@ class _CardInfo2 extends StatelessWidget {
                   borderRadius: BorderRadius.circular(10),
                   child: BackdropFilter(
                     filter: ImageFilter.blur(sigmaX: 3, sigmaY: 3),
-                    child: Center(
-                        child: Column(
-                      //mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Container(
-                          margin: EdgeInsets.symmetric(horizontal: 10),
-                          child: FittedBox(
-                            fit: BoxFit.scaleDown,
-                            child: Text(
-                              'PROPIETARIO',
-                              style: TextStyle(
-                                fontSize: 50,
-                                fontWeight: FontWeight.bold,
-                                color: Color(0xFF000000),
+                    child: LayoutBuilder(
+                      builder: (context, constraints) {
+                        return Column(
+                          //mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Container(
+                              margin: EdgeInsets.symmetric(horizontal: 10),
+                              child: FittedBox(
+                                fit: BoxFit.scaleDown,
+                                child: Text(
+                                  'PROPIETARIO',
+                                  style: TextStyle(
+                                    fontSize: 50,
+                                    fontWeight: FontWeight.bold,
+                                    color: Color(0xFF000000),
+                                  ),
+                                ),
                               ),
                             ),
-                          ),
-                        ),
-                        Container(
-                          margin: EdgeInsets.symmetric(horizontal: 10),
-                          width: size.width * 1.0,
-                          height: 200,
-                          child: Center(
-                            child: LimitedBox(
-                              maxWidth: 100,
-                              maxHeight: 250,
+                            Container(
+                              margin: EdgeInsets.symmetric(horizontal: 10),
                               child: Text(
-                                  textAlign: TextAlign.center,
-                                  '${infoList[0]['nombre']}',
-                                  maxLines: 2,
-                                  overflow: TextOverflow.ellipsis,
-                                  style: TextStyle(
-                                    fontSize: 60,
-                                    fontWeight: FontWeight.bold,
-                                    color: Color.fromARGB(255, 4, 67, 160),
-                                  )),
+                                '${infoList[0]['nombre']}',
+                                maxLines: 2,
+                                overflow: TextOverflow.ellipsis,
+                                style: TextStyle(
+                                  fontSize: constraints.maxWidth *
+                                      0.13, 
+                                  fontWeight: FontWeight.bold,
+                                  color: Color.fromARGB(255, 4, 67, 160),
+                                ),
+                              ),
                             ),
-                          ),
-                        ),
-                      ],
-                    )),
+                          ],
+                        );
+                      },
+                    ),
                   ),
                 ),
               ),
@@ -358,6 +358,7 @@ class _CardInfo2 extends StatelessWidget {
         ]));
   }
 }
+//'${infoList[0]['nombre']}',
 
 class _StateCard extends StatelessWidget {
   final String status;
