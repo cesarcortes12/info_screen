@@ -85,7 +85,7 @@ Color getColorForStatus(String state) {
 class InfoScreen extends StatelessWidget {
   String title = 'Info Screen';
 
-  InfoScreen({super.key, required this.title});
+  InfoScreen({Key? key, required this.title}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -99,10 +99,28 @@ class InfoScreen extends StatelessWidget {
         ),
         backgroundColor: Color.fromARGB(255, 4, 67, 160),
       ),
-      body: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-        _CardInfo(),
-        _CardInfo2(),
-      ]),
+      body: LayoutBuilder(builder: (context, constraints) {
+        if (constraints.maxWidth < 1035) {
+          return Container(
+            height: constraints.maxHeight,
+            width: constraints.maxWidth,
+            child: Column(
+              children: [
+                Expanded(child: _CardInfo2()),
+                Expanded(child: _CardInfo()),
+              ],
+            ),
+          );
+        } else {
+          return Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              _CardInfo(),
+              _CardInfo2(),
+            ],
+          );
+        }
+      }),
     );
   }
 }
@@ -204,9 +222,11 @@ class _CardInfo2 extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
+
     return Container(
         padding: EdgeInsets.all(30),
-        width: size.width * 0.6,
+        width: size.width > 1035 ? size.width * 0.6 : size.width,
+        height: size.height * 1.0,
         child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
           Text('Proximo a Entregar',
               style: TextStyle(
@@ -216,7 +236,7 @@ class _CardInfo2 extends StatelessWidget {
           SizedBox(height: 20),
           Stack(children: [
             Container(
-              width: size.width * 0.9,
+              width: size.width > 1035 ? size.width * 1 : size.width * 1,
               height: size.height * 0.65,
               decoration: BoxDecoration(
                 boxShadow: [
@@ -228,9 +248,10 @@ class _CardInfo2 extends StatelessWidget {
                   )
                 ],
                 image: DecorationImage(
-                    image: AssetImage(
-                        'assets/images/vehiculo_frontal_derecha.jpg'),
-                    fit: BoxFit.cover),
+                  image:
+                      AssetImage('assets/images/vehiculo_frontal_derecha.jpg'),
+                  fit: BoxFit.cover,
+                ),
                 borderRadius: BorderRadius.circular(10),
               ),
             ),
@@ -339,8 +360,7 @@ class _CardInfo2 extends StatelessWidget {
                                 maxLines: 2,
                                 overflow: TextOverflow.ellipsis,
                                 style: TextStyle(
-                                  fontSize: constraints.maxWidth *
-                                      0.13, 
+                                  fontSize: constraints.maxWidth * 0.13,
                                   fontWeight: FontWeight.bold,
                                   color: Color.fromARGB(255, 4, 67, 160),
                                 ),
