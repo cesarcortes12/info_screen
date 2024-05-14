@@ -4,6 +4,7 @@ import 'package:pantalla_informativa/config/theme/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:pantalla_informativa/features/car_management/presentation/cubit/auth_cubit/auth_cubit.dart';
 import 'package:pantalla_informativa/features/car_management/presentation/cubit/login_cubit/login_cubit.dart';
+import 'package:pantalla_informativa/features/car_management/presentation/presentation.dart';
 import 'package:pantalla_informativa/features/car_management/presentation/screens/login_screen.dart';
 // ignore: depend_on_referenced_packages
 
@@ -28,7 +29,9 @@ class MyApp extends StatelessWidget {
       title: 'Info Screen',
       debugShowCheckedModeBanner: false,
       theme: AppTheme().getTheme(),
-      home: LoginScreen(),
+      home: InfoScreen(
+        title: 'Pantalla Informativa',
+      ),
     );
   }
 }
