@@ -1,4 +1,4 @@
-part of 'login_cubit.dart';
+part of 'login_form_cubit.dart';
 
 enum FormStatus { invalid, valid, validating, posting }
 

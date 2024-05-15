@@ -4,11 +4,11 @@ import 'package:pantalla_informativa/features/car_management/presentation/cubit/
 import 'package:pantalla_informativa/features/shared/inputs/password.dart';
 import 'package:pantalla_informativa/features/shared/inputs/userName.dart';
 
-part 'login_state.dart';
+part 'login_form_state.dart';
 
-class LoginCubit extends Cubit<LoginState> {
+class LoginFormCubit extends Cubit<LoginState> {
   final AuthCubit authCubit;
-  LoginCubit({required this.authCubit}) : super(const LoginState());
+  LoginFormCubit({required this.authCubit}) : super(const LoginState());
 
   Future<void> onSumit() async {
     _validatingstate();

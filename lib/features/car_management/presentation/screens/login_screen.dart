@@ -3,7 +3,7 @@ import 'dart:math' show pi;
 
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pantalla_informativa/features/car_management/presentation/cubit/auth_cubit/auth_cubit.dart';
-import 'package:pantalla_informativa/features/car_management/presentation/cubit/login_cubit/login_cubit.dart';
+import 'package:pantalla_informativa/features/car_management/presentation/cubit/login_form_cubit/login_form_cubit.dart';
 import 'package:pantalla_informativa/features/widgets/custom_filled_button.dart';
 import 'package:pantalla_informativa/features/widgets/cutom_text_form_field.dart';
 //import 'package:flutter_svg/svg.dart';
@@ -38,8 +38,7 @@ class LoginScreen extends StatelessWidget {
                           height: 300,
                         ),
                       ),
-                      const SizedBox(
-                          width: 30), // Espacio entre la imagen y el formulario
+                      const SizedBox(width: 30),
                       Container(
                           width: 500,
                           padding: EdgeInsets.all(30),
@@ -104,7 +103,7 @@ class _LoginForm extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final textStyles = Theme.of(context).textTheme;
-    final loginFormBloc = context.read<LoginCubit>();
+    final loginFormCubit = context.read<LoginFormCubit>();
     final scaffoldKey = ScaffoldMessenger.of(context);
 
     return BlocListener<AuthCubit, AuthState>(listener: (context, state) {
@@ -117,7 +116,7 @@ class _LoginForm extends StatelessWidget {
           ),
         ));
       }
-    }, child: BlocBuilder<LoginCubit, LoginState>(
+    }, child: BlocBuilder<LoginFormCubit, LoginState>(
       builder: (context, state) {
         return //SingleChildScrollView(
             Column(
@@ -135,15 +134,15 @@ class _LoginForm extends StatelessWidget {
             CustomTextFormField(
               label: 'Nombre de usuario',
               keyboardType: TextInputType.emailAddress,
-              onChanged: (value) => loginFormBloc.usernameChanged(value),
-              errorMessage: loginFormBloc.state.username.errorMenssage,
+              onChanged: (value) => loginFormCubit.usernameChanged(value),
+              errorMessage: loginFormCubit.state.username.errorMenssage,
             ),
             const SizedBox(height: 10),
             CustomTextFormField(
               label: 'Contraseña',
               obscureText: true,
-              onChanged: (value) => loginFormBloc.passwordChanged(value),
-              errorMessage: loginFormBloc.state.password.errorMenssage,
+              onChanged: (value) => loginFormCubit.passwordChanged(value),
+              errorMessage: loginFormCubit.state.password.errorMenssage,
             ),
             const SizedBox(height: 10),
             SizedBox(
@@ -155,9 +154,9 @@ class _LoginForm extends StatelessWidget {
                   //GoRouter.of(context).go('/');
                   Navigator.pushNamed(context, '/info');
 
-                  if (!loginFormBloc.state.isPosting) {
-                    loginFormBloc.onSumit();
-                  }
+                  //if (!loginCubit.state.isPosting) {
+                  loginFormCubit.onSumit();
+                  //}
                 },
               ),
             ),
