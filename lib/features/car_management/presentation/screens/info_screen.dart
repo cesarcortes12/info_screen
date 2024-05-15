@@ -10,35 +10,35 @@ List<Map<String, String>> infoList = [
   {
     'placa': 'ABC123',
     'nombre': 'Cesar Augusto Cortes zapata',
-    'asignado_a': 'Juan Pérez ',
+    'asignado_a': 'Juan Pérez López',
     'hora_entrega': '10:00 AM',
     'estado': 'En orden De taller'
   },
   {
     'placa': 'DEF456',
-    'nombre': 'Jane Smith',
-    'asignado_a': 'María García',
+    'nombre': 'Jane Smith Johnson',
+    'asignado_a': 'María García Pérez',
     'hora_entrega': '11:30 AM',
     'estado': 'En Ejecucion'
   },
   {
     'placa': 'GHI789',
-    'nombre': 'Alice Johnson',
-    'asignado_a': 'Pedro Rodríguez',
+    'nombre': 'Alice Wilson Rodríguez',
+    'asignado_a': 'Pedro Rodríguez González',
     'hora_entrega': '1:00 PM',
     'estado': 'Pausado'
   },
   {
     'placa': 'JKL012',
-    'nombre': 'Bob Brown',
-    'asignado_a': 'Luis Martínez',
+    'nombre': 'Bob Brown Martínez',
+    'asignado_a': 'Luis Martínez Martínez',
     'hora_entrega': '2:30 PM',
     'estado': 'facturado'
   },
   {
     'placa': 'MNO345',
-    'nombre': 'Emily Wilson',
-    'asignado_a': 'Carlos López',
+    'nombre': 'Emily García López',
+    'asignado_a': 'Carlos López García',
     'hora_entrega': '4:00 PM',
     'estado': 'listo para entrega'
   },
@@ -57,7 +57,7 @@ entregado
 Color getColorForStatus(String state) {
   switch (state.toLowerCase()) {
     case 'en orden de taller':
-      return Color.fromARGB(255, 102, 122, 238);
+      return Color.fromARGB(255, 161, 170, 221);
 
     case 'en ejecucion':
       return Color.fromARGB(205, 253, 186, 0);
@@ -112,12 +112,22 @@ class InfoScreen extends StatelessWidget {
             ),
           );
         } else {
-          return Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              _CardInfo(),
-              _CardInfo2(),
-            ],
+          return Container(
+            height: constraints.maxHeight,
+            width: constraints.maxWidth,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Expanded(
+                  flex: 6,
+                  child: _CardInfo(),
+                ),
+                Expanded(
+                  flex: 4,
+                  child: _CardInfo2(),
+                )
+              ],
+            ),
           );
         }
       }),
@@ -164,10 +174,19 @@ class _CardInfo extends StatelessWidget {
                               children: [
                                 ListTile(
                                     title: Text('Placa : ${info['placa']}',
+                                        textAlign: TextAlign.center,
                                         style: TextStyle(
                                             color: Colors.white,
-                                            fontSize: 20,
-                                            fontWeight: FontWeight.bold)),
+                                            fontSize: 22,
+                                            fontWeight: FontWeight.bold,
+                                            shadows: [
+                                              Shadow(
+                                                offset: Offset(2.0, 2.0),
+                                                blurRadius: 4.0,
+                                                color: Color.fromARGB(
+                                                    128, 0, 0, 0),
+                                              )
+                                            ])),
                                     subtitle: Column(
                                         crossAxisAlignment:
                                             CrossAxisAlignment.start,
@@ -233,7 +252,7 @@ class _CardInfo2 extends StatelessWidget {
                   fontSize: 40,
                   fontFamily: 'Poppins',
                   fontWeight: FontWeight.bold)),
-          SizedBox(height: 20),
+          SizedBox(height: 26),
           Stack(children: [
             Container(
               width: size.width > 1035 ? size.width * 1 : size.width * 1,
@@ -256,13 +275,13 @@ class _CardInfo2 extends StatelessWidget {
               ),
             ),
             Positioned(
-              left: size.width * 0.02,
-              top: size.height * 0.15,
+              left: size.width * 0.045,
+              top: size.height * 0.20,
               child: Container(
-                width: size.width * 0.25,
-                height: size.width * 0.15,
+                width: size.width * 0.28,
+                height: size.width * 0.18,
                 decoration: BoxDecoration(
-                  color: Color.fromARGB(255, 255, 255, 255).withOpacity(0.8),
+                  color: Color.fromARGB(255, 0, 0, 0).withOpacity(0.4),
                   borderRadius: BorderRadius.circular(10),
                   boxShadow: [
                     BoxShadow(
@@ -284,61 +303,32 @@ class _CardInfo2 extends StatelessWidget {
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             Text(
-                              'PLACA',
+                              'PLACA : ${infoList[0]['placa'] ?? ''}',
                               style: TextStyle(
-                                fontSize: constraints.maxWidth * 0.2,
-                                fontWeight: FontWeight.bold,
-                                color: Color(0xFF000000),
-                              ),
-                            ),
-                            Container(
-                              margin: EdgeInsets.symmetric(horizontal: 10),
-                              child: Text(
-                                infoList[0]['placa'] ?? '',
-                                style: TextStyle(
-                                  fontSize: constraints.maxWidth *
-                                      0.20, // Ajuste dinámico del tamaño del texto
+                                  fontSize: constraints.maxWidth * 0.1,
                                   fontWeight: FontWeight.bold,
-                                  color: Color.fromARGB(255, 4, 67, 160),
-                                ),
-                              ),
+                                  color: Color.fromARGB(255, 255, 255, 255),
+                                  shadows: [
+                                    Shadow(
+                                      offset: Offset(2.0, 2.0),
+                                      blurRadius: 4.0,
+                                      color: Color.fromARGB(128, 0, 0, 0),
+                                    )
+                                  ]),
                             ),
-                          ],
-                        );
-                      },
-                    ),
-                  ),
-                ),
-              ),
-            ),
-            Positioned(
-              right: size.width * 0.02,
-              top: size.height * 0.15,
-              child: Container(
-                width: size.width * 0.25,
-                height: size.width * 0.15,
-                decoration: BoxDecoration(
-                  color: Color.fromARGB(255, 255, 255, 255).withOpacity(0.8),
-                  borderRadius: BorderRadius.circular(10),
-                  boxShadow: [
-                    BoxShadow(
-                      color:
-                          const Color.fromARGB(255, 0, 0, 0).withOpacity(0.5),
-                      spreadRadius: 3,
-                      blurRadius: 5,
-                      offset: Offset(0, 3),
-                    ),
-                  ],
-                ),
-                child: ClipRRect(
-                  borderRadius: BorderRadius.circular(10),
-                  child: BackdropFilter(
-                    filter: ImageFilter.blur(sigmaX: 3, sigmaY: 3),
-                    child: LayoutBuilder(
-                      builder: (context, constraints) {
-                        return Column(
-                          //mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
+                            // Container(
+                            //   margin: EdgeInsets.symmetric(horizontal: 10),
+                            //   child: Text(
+                            //     infoList[0]['placa'] ?? '',
+                            //     style: TextStyle(
+                            //       fontSize: constraints.maxWidth *
+                            //           0.10, // Ajuste dinámico del tamaño del texto
+                            //       fontWeight: FontWeight.bold,
+                            //       color: Color.fromARGB(255, 4, 67, 160),
+                            //     ),
+                            //   ),
+                            // ),
+                            SizedBox(height: 20),
                             Container(
                               margin: EdgeInsets.symmetric(horizontal: 10),
                               child: FittedBox(
@@ -346,23 +336,40 @@ class _CardInfo2 extends StatelessWidget {
                                 child: Text(
                                   'PROPIETARIO',
                                   style: TextStyle(
-                                    fontSize: 50,
+                                    fontSize: 35,
                                     fontWeight: FontWeight.bold,
-                                    color: Color(0xFF000000),
+                                    color: Color.fromARGB(255, 255, 255, 255),
+                                    shadows: [
+                                      Shadow(
+                                        offset: Offset(2.0, 2.0),
+                                        blurRadius: 4.0,
+                                        color: Color.fromARGB(128, 0, 0, 0),
+                                      ),
+                                    ],
                                   ),
                                 ),
                               ),
                             ),
                             Container(
                               margin: EdgeInsets.symmetric(horizontal: 10),
-                              child: Text(
-                                '${infoList[0]['nombre']}',
-                                maxLines: 2,
-                                overflow: TextOverflow.ellipsis,
-                                style: TextStyle(
-                                  fontSize: constraints.maxWidth * 0.13,
-                                  fontWeight: FontWeight.bold,
-                                  color: Color.fromARGB(255, 4, 67, 160),
+                              child: Expanded(
+                                child: Text(
+                                  textAlign: TextAlign.center,
+                                  '${infoList[0]['nombre']}',
+                                  maxLines: 2,
+                                  overflow: TextOverflow.ellipsis,
+                                  style: TextStyle(
+                                    fontSize: constraints.maxWidth * 0.08,
+                                    fontWeight: FontWeight.w400,
+                                    color: Color.fromARGB(255, 255, 255, 255),
+                                    shadows: [
+                                      Shadow(
+                                        offset: Offset(2.0, 2.0),
+                                        blurRadius: 4.0,
+                                        color: Color.fromARGB(128, 0, 0, 0),
+                                      ),
+                                    ],
+                                  ),
                                 ),
                               ),
                             ),
@@ -374,6 +381,69 @@ class _CardInfo2 extends StatelessWidget {
                 ),
               ),
             ),
+            // Positioned(
+            //   right: size.width * 0.02,
+            //   top: size.height * 0.15,
+            //   child: Container(
+            //     width: size.width * 0.25,
+            //     height: size.width * 0.15,
+            //     decoration: BoxDecoration(
+            //       color: Color.fromARGB(255, 255, 255, 255).withOpacity(0.8),
+            //       borderRadius: BorderRadius.circular(10),
+            //       boxShadow: [
+            //         BoxShadow(
+            //           color:
+            //               const Color.fromARGB(255, 0, 0, 0).withOpacity(0.5),
+            //           spreadRadius: 3,
+            //           blurRadius: 5,
+            //           offset: Offset(0, 3),
+            //         ),
+            //       ],
+            //     ),
+            //     child: ClipRRect(
+            //       borderRadius: BorderRadius.circular(10),
+            //       child: BackdropFilter(
+            //         filter: ImageFilter.blur(sigmaX: 3, sigmaY: 3),
+            //         child: LayoutBuilder(
+            //           builder: (context, constraints) {
+            //             return Column(
+            //               //mainAxisAlignment: MainAxisAlignment.center,
+            //               children: [
+            //                 Container(
+            //                   margin: EdgeInsets.symmetric(horizontal: 10),
+            //                   child: FittedBox(
+            //                     fit: BoxFit.scaleDown,
+            //                     child: Text(
+            //                       'PROPIETARIO',
+            //                       style: TextStyle(
+            //                         fontSize: 50,
+            //                         fontWeight: FontWeight.bold,
+            //                         color: Color(0xFF000000),
+            //                       ),
+            //                     ),
+            //                   ),
+            //                 ),
+            //                 Container(
+            //                   margin: EdgeInsets.symmetric(horizontal: 10),
+            //                   child: Text(
+            //                     '${infoList[0]['nombre']}',
+            //                     maxLines: 2,
+            //                     overflow: TextOverflow.ellipsis,
+            //                     style: TextStyle(
+            //                       fontSize: constraints.maxWidth * 0.13,
+            //                       fontWeight: FontWeight.bold,
+            //                       color: Color.fromARGB(255, 4, 67, 160),
+            //                     ),
+            //                   ),
+            //                 ),
+            //               ],
+            //             );
+            //           },
+            //         ),
+            //       ),
+            //     ),
+            //   ),
+            // ),
           ])
         ]));
   }
@@ -408,6 +478,7 @@ class _StateCard extends StatelessWidget {
               status,
               textAlign: TextAlign.center,
               style: TextStyle(
+                fontSize: 17,
                 color: Colors.black,
                 fontWeight: FontWeight.bold,
               ),
@@ -424,14 +495,23 @@ class _StateCard extends StatelessWidget {
                 Text(
                   'Hora de entrega',
                   style: TextStyle(
-                      fontWeight: FontWeight.bold, color: Colors.black),
+                    fontWeight: FontWeight.bold,
+                    color: Colors.black,
+                  ),
                 ),
                 Text(
                   time,
                   style: TextStyle(
                       color: Colors.black,
                       fontSize: 25,
-                      fontWeight: FontWeight.bold),
+                      fontWeight: FontWeight.bold,
+                      shadows: [
+                        Shadow(
+                          offset: Offset(2.0, 2.0),
+                          blurRadius: 4.0,
+                          color: Color.fromARGB(255, 255, 255, 255),
+                        )
+                      ]),
                 ),
               ],
             ),

@@ -31,7 +31,7 @@ class MyApp extends StatelessWidget {
       routes: {
         '/': (context) => LoginScreen(),
         '/info': (context) => InfoScreen(
-              title: '',
+              title: 'Pantalla Informativa',
             ),
       },
     );

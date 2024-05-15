@@ -30,20 +30,44 @@ class LoginScreen extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Container(
+                        height: 330,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.only(
+                            topLeft: Radius.circular(30),
+                            bottomLeft: Radius.circular(30),
+                          ),
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.grey.withOpacity(0.3),
+                              spreadRadius: 5,
+                              blurRadius: 7,
+                              offset:
+                                  Offset(0, 3), // changes position of shadow
+                            ),
+                          ],
+                        ),
                         margin: EdgeInsets.symmetric(vertical: 30),
-                        child: const Image(
-                          image: AssetImage(
-                              'assets/images/vehiculo_frontal_derecha.jpg'),
-                          width: 300,
-                          height: 300,
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.only(
+                            topLeft: Radius.circular(30),
+                            bottomLeft: Radius.circular(30),
+                          ),
+                          child: const Image(
+                            image: AssetImage('assets/images/taller.jpg'),
+                            width: 500,
+                            height: 500,
+                          ),
                         ),
                       ),
-                      const SizedBox(width: 30),
+                      //const SizedBox(width: 30),
                       Container(
                           width: 500,
                           padding: EdgeInsets.all(30),
                           decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(10),
+                            borderRadius: BorderRadius.only(
+                              topRight: Radius.circular(30),
+                              bottomRight: Radius.circular(30),
+                            ),
                             color: Colors.white,
                             boxShadow: [
                               BoxShadow(
