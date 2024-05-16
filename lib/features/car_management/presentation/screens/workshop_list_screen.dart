@@ -18,7 +18,7 @@ class _WorkshopListScreenState extends State<WorkshopListScreen> {
   void initState() {
     super.initState();
     pickingCubit = BlocProvider.of<CarManagementCubit>(context);
-    pickingCubit.getAutos();
+    pickingCubit.getWorkShop();
   }
 
   @override
