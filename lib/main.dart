@@ -37,9 +37,7 @@ class MyApp extends StatelessWidget {
       theme: AppTheme().getTheme(),
       initialRoute: '/',
       routes: {
-        '/': (context) => InfoScreen(
-              title: 'no se',
-            ),
+        '/': (context) => WorkshopListScreen(),
         '/info': (context) => WorkshopListScreen(),
       },
     );

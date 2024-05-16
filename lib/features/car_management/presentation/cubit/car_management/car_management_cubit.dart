@@ -17,9 +17,41 @@ class CarManagementCubit extends Cubit<CarManagementState> {
       emit(state.copyWith(loaded: LoadingStatus.checking));
 
       List<Auto> autos = [
-        Auto(name: 'Taller 1', position: 'Posición 1'),
-        Auto(name: 'Taller 2', position: 'Posición 2'),
-        Auto(name: 'Taller 3', position: 'Posición 3'),
+        Auto(
+            name: 'Taller 1',
+            city: 'Cali',
+            address: 'Cr56 # 56-56',
+            phone: '312678809'),
+        Auto(
+          name: 'Taller 2',
+          city: 'Medellín',
+          address: 'Cr56 # 56-56',
+          phone: '312678809',
+        ),
+        Auto(
+          name: 'Taller 3',
+          city: 'Bogota',
+          address: 'Cr56 # 56-56',
+          phone: '312678809',
+        ),
+        Auto(
+          name: 'Taller 3',
+          city: 'Bogota',
+          address: 'Cr56 # 56-56',
+          phone: '312678809',
+        ),
+        Auto(
+          name: 'Taller 3',
+          city: 'Bogota',
+          address: 'Cr56 # 56-56',
+          phone: '312678809',
+        ),
+        Auto(
+          name: 'Taller 3',
+          city: 'Bogota',
+          address: 'Cr56 # 56-56',
+          phone: '312678809',
+        ),
         // Agrega más talleres según sea necesario
       ];
       //print('bodegas ${state.autos}');
