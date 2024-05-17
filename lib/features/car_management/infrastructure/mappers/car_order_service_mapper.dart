@@ -9,5 +9,6 @@ class CarOrderServiceMapper {
         assignedTo: json['asignado_a'] ?? 'sin mecanico',
         deliveryTime: json['hora_entrega'] ?? DateTime.now(),
         status: json['estado'] ?? 'sin estado',
+        modelo: json['modelo'] ?? 'sin modelo',
       );
 }

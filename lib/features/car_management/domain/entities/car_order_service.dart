@@ -5,6 +5,7 @@ class CarOrderService {
   final String assignedTo;
   final String deliveryTime;
   final String status;
+  final String modelo;
 
   CarOrderService({
     required this.id,
@@ -13,5 +14,6 @@ class CarOrderService {
     required this.assignedTo,
     required this.deliveryTime,
     required this.status,
+    required this.modelo,
   });
 }

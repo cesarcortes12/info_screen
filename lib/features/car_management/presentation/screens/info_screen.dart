@@ -10,54 +10,6 @@ import 'package:pantalla_informativa/features/car_management/domain/domain.dart'
 import 'package:pantalla_informativa/features/car_management/presentation/cubit/car_management/car_management_cubit.dart';
 import 'package:pantalla_informativa/features/car_management/presentation/screens/workshop_list_screen.dart';
 
-// List<Map<String, String>> infoList = [
-//   {
-//     'placa': 'ABC123',
-//     'nombre': 'Cesar Augusto Cortes zapata',
-//     'asignado_a': 'Juan Pérez López',
-//     'hora_entrega': '10:00 AM',
-//     'estado': 'En orden De taller'
-//   },
-//   {
-//     'placa': 'DEF456',
-//     'nombre': 'Jane Smith Johnson',
-//     'asignado_a': 'María García Pérez',
-//     'hora_entrega': '11:30 AM',
-//     'estado': 'En Ejecucion'
-//   },
-//   {
-//     'placa': 'GHI789',
-//     'nombre': 'Alice Wilson Rodríguez',
-//     'asignado_a': 'Pedro Rodríguez González',
-//     'hora_entrega': '1:00 PM',
-//     'estado': 'Pausado'
-//   },
-//   {
-//     'placa': 'JKL012',
-//     'nombre': 'Bob Brown Martínez',
-//     'asignado_a': 'Luis Martínez Martínez',
-//     'hora_entrega': '2:30 PM',
-//     'estado': 'facturado'
-//   },
-//   {
-//     'placa': 'MNO345',
-//     'nombre': 'Emily García López',
-//     'asignado_a': 'Carlos López García',
-//     'hora_entrega': '4:00 PM',
-//     'estado': 'listo para entrega'
-//   },
-// ];
-
-/*
-en orden de taller
-en ejecucion
-pausado
-finalizado
-facturado
-listo para entrega
-entregado
- */
-
 Color getColorForStatus(String state) {
   switch (state.toLowerCase()) {
     case 'en orden de taller':
@@ -124,20 +76,21 @@ class _InfoScreenState extends State<InfoScreen> {
               return (carManagementCubit.state.carsOrderService.isEmpty)
                   ? const CustomEmptyState(
                       message: 'No hay bodegas para mostrar')
-                  : Container(
-                      height: constraints.maxHeight,
-                      width: constraints.maxWidth,
-                      child: Column(
-                        children: [
-                          Expanded(
-                              child: _CardInfo2(
-                            carOrderService:
-                                carManagementCubit.state.carsOrderService.first,
-                          )),
-                          Expanded(
-                              child: _CardInfo(
-                                  carManagementCubit: carManagementCubit)),
-                        ],
+                  : SingleChildScrollView(
+                      child: Container(
+                        height: constraints.maxHeight,
+                        width: constraints.maxWidth,
+                        child: Column(
+                          children: [
+                            _CardInfo2Small(
+                              carOrderService: carManagementCubit
+                                  .state.carsOrderService.first,
+                            ),
+                            Expanded(
+                                child: _CardInfoSmall(
+                                    carManagementCubit: carManagementCubit)),
+                          ],
+                        ),
                       ),
                     );
             } else {
@@ -212,47 +165,81 @@ class _CardInfo extends StatelessWidget {
                         Flexible(
                           flex: 2,
                           child: Container(
-                            //margin: EdgeInsets.only(right: 103),
-                            //width: size.width * 0.10,
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceAround,
                               children: [
-                                ListTile(
-                                    title: Text('Placa : ${info.licensePlate}',
-                                        textAlign: TextAlign.center,
-                                        style: TextStyle(
-                                            color: Colors.white,
-                                            fontSize: 22,
-                                            fontWeight: FontWeight.bold,
-                                            shadows: [
-                                              Shadow(
-                                                offset: Offset(2.0, 2.0),
-                                                blurRadius: 4.0,
-                                                color: Color.fromARGB(
-                                                    128, 0, 0, 0),
-                                              )
-                                            ])),
-                                    subtitle: Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: [
-                                          SizedBox(height: 6),
-                                          Text(
-                                            'Nombre: ${info.name}',
+                                Container(
+                                    width: size.width * 0.09,
+                                    height: size.height * 0.12,
+                                    child: ListTile(
+                                      contentPadding: EdgeInsets.only(
+                                        bottom: 20,
+                                      ),
+                                      title: FittedBox(
+                                        fit: BoxFit.contain,
+                                        child: Text(
+                                            'Placa \n ${info.licensePlate}',
+                                            textAlign: TextAlign.center,
                                             style: TextStyle(
                                                 color: Colors.white,
-                                                fontSize: 18),
-                                          ),
-                                          SizedBox(height: 6),
-                                          Text('Asignado a: ${info.assignedTo}',
+                                                //fontSize: 20,
+                                                fontWeight: FontWeight.bold,
+                                                shadows: [
+                                                  Shadow(
+                                                    offset: Offset(2.0, 2.0),
+                                                    blurRadius: 4.0,
+                                                    color: Color.fromARGB(
+                                                        128, 0, 0, 0),
+                                                  )
+                                                ])),
+                                      ),
+                                    )),
+                                Container(
+                                  width: size.width * 0.25,
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      ListTile(
+                                          title: Text(info.modelo.toUpperCase(),
+                                              textAlign: TextAlign.center,
                                               style: TextStyle(
-                                                  color: Colors.white)),
-                                          // SizedBox(height: 6),
-                                          // Text(
-                                          //     'Hora Entrega: ${info['hora_entrega']}',
-                                          //     style: TextStyle(
-                                          //         color: Colors.white)),
-                                        ])),
+                                                  color: Colors.white,
+                                                  fontSize: 22,
+                                                  fontWeight: FontWeight.bold,
+                                                  shadows: [
+                                                    Shadow(
+                                                      offset: Offset(2.0, 2.0),
+                                                      blurRadius: 4.0,
+                                                      color: Color.fromARGB(
+                                                          128, 0, 0, 0),
+                                                    )
+                                                  ])),
+                                          subtitle: Column(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              children: [
+                                                SizedBox(height: 6),
+                                                Text(
+                                                  info.name,
+                                                  style: TextStyle(
+                                                      color: Colors.white,
+                                                      fontSize: 18),
+                                                ),
+                                                SizedBox(height: 6),
+                                                Text(
+                                                    'Asignado a: ${info.assignedTo}',
+                                                    style: TextStyle(
+                                                        color: Colors.white)),
+                                                // SizedBox(height: 6),
+                                                // Text(
+                                                //     'Hora Entrega: ${info['hora_entrega']}',
+                                                //     style: TextStyle(
+                                                //         color: Colors.white)),
+                                              ])),
+                                    ],
+                                  ),
+                                ),
                               ],
                             ),
                           ),
@@ -302,7 +289,7 @@ class _CardInfo2 extends StatelessWidget {
                   fontSize: 40,
                   fontFamily: 'Poppins',
                   fontWeight: FontWeight.bold)),
-          SizedBox(height: 26),
+          SizedBox(height: 70),
           Stack(children: [
             Container(
               width: size.width > 1035 ? size.width * 1 : size.width * 1,
@@ -419,74 +406,10 @@ class _CardInfo2 extends StatelessWidget {
                 ),
               ),
             ),
-            // Positioned(
-            //   right: size.width * 0.02,
-            //   top: size.height * 0.15,
-            //   child: Container(
-            //     width: size.width * 0.25,
-            //     height: size.width * 0.15,
-            //     decoration: BoxDecoration(
-            //       color: Color.fromARGB(255, 255, 255, 255).withOpacity(0.8),
-            //       borderRadius: BorderRadius.circular(10),
-            //       boxShadow: [
-            //         BoxShadow(
-            //           color:
-            //               const Color.fromARGB(255, 0, 0, 0).withOpacity(0.5),
-            //           spreadRadius: 3,
-            //           blurRadius: 5,
-            //           offset: Offset(0, 3),
-            //         ),
-            //       ],
-            //     ),
-            //     child: ClipRRect(
-            //       borderRadius: BorderRadius.circular(10),
-            //       child: BackdropFilter(
-            //         filter: ImageFilter.blur(sigmaX: 3, sigmaY: 3),
-            //         child: LayoutBuilder(
-            //           builder: (context, constraints) {
-            //             return Column(
-            //               //mainAxisAlignment: MainAxisAlignment.center,
-            //               children: [
-            //                 Container(
-            //                   margin: EdgeInsets.symmetric(horizontal: 10),
-            //                   child: FittedBox(
-            //                     fit: BoxFit.scaleDown,
-            //                     child: Text(
-            //                       'PROPIETARIO',
-            //                       style: TextStyle(
-            //                         fontSize: 50,
-            //                         fontWeight: FontWeight.bold,
-            //                         color: Color(0xFF000000),
-            //                       ),
-            //                     ),
-            //                   ),
-            //                 ),
-            //                 Container(
-            //                   margin: EdgeInsets.symmetric(horizontal: 10),
-            //                   child: Text(
-            //                     '${infoList[0]['nombre']}',
-            //                     maxLines: 2,
-            //                     overflow: TextOverflow.ellipsis,
-            //                     style: TextStyle(
-            //                       fontSize: constraints.maxWidth * 0.13,
-            //                       fontWeight: FontWeight.bold,
-            //                       color: Color.fromARGB(255, 4, 67, 160),
-            //                     ),
-            //                   ),
-            //                 ),
-            //               ],
-            //             );
-            //           },
-            //         ),
-            //       ),
-            //     ),
-            //   ),
-            // ),
           ])
         ]));
   }
 }
-//'${infoList[0]['nombre']}',
 
 class _StateCard extends StatelessWidget {
   final String status;
@@ -500,62 +423,410 @@ class _StateCard extends StatelessWidget {
   }) : super(key: key);
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Container(
-          width: double.infinity,
-          height: 40,
-          decoration: BoxDecoration(
-            color: getColorForStatus(status),
-            borderRadius: BorderRadius.only(
-                topLeft: Radius.circular(10), topRight: Radius.circular(10)),
-          ),
-          child: Padding(
-            padding: const EdgeInsets.only(top: 10),
-            child: Text(
-              status,
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                fontSize: 17,
-                color: Colors.black,
-                fontWeight: FontWeight.bold,
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        return Column(
+          children: [
+            Container(
+              padding: EdgeInsets.symmetric(horizontal: 10),
+              width: double.infinity,
+              height: constraints.maxHeight * 0.35,
+              decoration: BoxDecoration(
+                color: getColorForStatus(status),
+                borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(10),
+                    topRight: Radius.circular(10)),
               ),
-            ),
-          ),
-        ),
-        Padding(
-          padding: const EdgeInsets.only(
-            top: 15,
-          ),
-          child: Container(
-            child: Column(
-              children: [
-                Text(
-                  'Hora de entrega',
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    color: Colors.black,
+              child: Padding(
+                padding: const EdgeInsets.only(top: 10),
+                child: FittedBox(
+                  fit: BoxFit.scaleDown,
+                  child: Text(
+                    status,
+                    textAlign: TextAlign.center,
+                    maxLines: 2,
+                    style: TextStyle(
+                      fontSize: constraints.maxWidth * 0.12,
+                      color: Colors.black,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
                 ),
-                Text(
-                  time,
-                  style: TextStyle(
-                      color: Colors.black,
-                      fontSize: 25,
-                      fontWeight: FontWeight.bold,
-                      shadows: [
-                        Shadow(
-                          offset: Offset(2.0, 2.0),
-                          blurRadius: 4.0,
-                          color: Color.fromARGB(255, 255, 255, 255),
-                        )
-                      ]),
-                ),
-              ],
+              ),
             ),
+            Padding(
+              padding: const EdgeInsets.only(
+                top: 10,
+                left: 10,
+                right: 10,
+              ),
+              child: Container(
+                child: Column(
+                  children: [
+                    FittedBox(
+                      fit: BoxFit.scaleDown,
+                      child: Text(
+                        'Hora de entrega',
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          color: Colors.black,
+                          fontSize: constraints.maxHeight * 0.12,
+                        ),
+                      ),
+                    ),
+                    FittedBox(
+                      fit: BoxFit.scaleDown,
+                      child: Text(
+                        time,
+                        style: TextStyle(
+                            color: Colors.black,
+                            fontSize: constraints.maxHeight * 0.20,
+                            fontWeight: FontWeight.bold,
+                            shadows: [
+                              Shadow(
+                                offset: Offset(2.0, 2.0),
+                                blurRadius: 4.0,
+                                color: Color.fromARGB(255, 255, 255, 255),
+                              )
+                            ]),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            )
+          ],
+        );
+      },
+    );
+  }
+}
+
+class _CardInfo2Small extends StatelessWidget {
+  final CarOrderService carOrderService;
+
+  const _CardInfo2Small({
+    required this.carOrderService,
+    super.key,
+  });
+  @override
+  Widget build(BuildContext context) {
+    final size = MediaQuery.of(context).size;
+
+    return Container(
+        padding: EdgeInsets.symmetric(horizontal: 20, vertical: 5),
+        width: size.width * 1,
+        //height: size.height * 1,
+        child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+          Text('Proximo a Entregar',
+              style: TextStyle(
+                  fontSize: 33,
+                  fontFamily: 'Poppins',
+                  fontWeight: FontWeight.bold)),
+          SizedBox(height: 15),
+          Stack(children: [
+            AspectRatio(
+              aspectRatio: 3 / 1,
+              child: Container(
+                //width: size.width * 1,
+                //height: size.height * 0.3,
+                decoration: BoxDecoration(
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.grey.withOpacity(0.5),
+                      spreadRadius: 5,
+                      blurRadius: 7,
+                      offset: Offset(0, 3),
+                    )
+                  ],
+                  borderRadius: BorderRadius.circular(10),
+                ),
+                child: ClipRRect(
+                    borderRadius: BorderRadius.circular(10),
+                    child: Image.asset(
+                      'assets/images/vehiculo_frontal_derecha.jpg',
+                      fit: BoxFit.cover,
+                      // width: double.infinity,
+                      //height: double.infinity,
+                    )),
+              ),
+            ),
+            Positioned(
+              left: size.width * 0.1,
+              top: size.height * 0.03,
+              child: Container(
+                width: size.width * 0.70,
+                height: size.width * 0.20,
+                decoration: BoxDecoration(
+                  color: Color.fromARGB(255, 0, 0, 0).withOpacity(0.4),
+                  borderRadius: BorderRadius.circular(10),
+                  boxShadow: [
+                    BoxShadow(
+                      color:
+                          const Color.fromARGB(255, 0, 0, 0).withOpacity(0.4),
+                      spreadRadius: 3,
+                      blurRadius: 5,
+                      offset: Offset(0, 3),
+                    ),
+                  ],
+                ),
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(10),
+                  child: BackdropFilter(
+                    filter: ImageFilter.blur(sigmaX: 3, sigmaY: 3),
+                    child: LayoutBuilder(
+                      builder: (context, constraints) {
+                        return Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Container(
+                              padding: EdgeInsets.symmetric(horizontal: 10),
+                              child: FittedBox(
+                                fit: BoxFit.scaleDown,
+                                child: Text(
+                                  'PLACA : ${carOrderService.licensePlate}',
+                                  style: TextStyle(
+                                      fontSize: constraints.maxWidth * 0.06,
+                                      fontWeight: FontWeight.bold,
+                                      color: Color.fromARGB(255, 255, 255, 255),
+                                      shadows: [
+                                        Shadow(
+                                          offset: Offset(2.0, 2.0),
+                                          blurRadius: 4.0,
+                                          color: Color.fromARGB(128, 0, 0, 0),
+                                        )
+                                      ]),
+                                ),
+                              ),
+                            ),
+                            SizedBox(height: 5),
+                            Container(
+                              margin: EdgeInsets.symmetric(horizontal: 10),
+                              child: FittedBox(
+                                fit: BoxFit.scaleDown,
+                                child: Text(
+                                  'PROPIETARIO',
+                                  style: TextStyle(
+                                    fontSize: constraints.maxWidth * 0.05,
+                                    fontWeight: FontWeight.bold,
+                                    color: Color.fromARGB(255, 255, 255, 255),
+                                    shadows: [
+                                      Shadow(
+                                        offset: Offset(2.0, 2.0),
+                                        blurRadius: 4.0,
+                                        color: Color.fromARGB(128, 0, 0, 0),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            ),
+                            Container(
+                              margin: EdgeInsets.symmetric(horizontal: 10),
+                              child: FittedBox(
+                                fit: BoxFit.scaleDown,
+                                child: Text(
+                                  textAlign: TextAlign.center,
+                                  '${carOrderService.name}',
+                                  maxLines: 2,
+                                  overflow: TextOverflow.ellipsis,
+                                  style: TextStyle(
+                                    fontSize: constraints.maxWidth * 0.06,
+                                    fontWeight: FontWeight.w400,
+                                    color: Color.fromARGB(255, 255, 255, 255),
+                                    shadows: [
+                                      Shadow(
+                                        offset: Offset(2.0, 2.0),
+                                        blurRadius: 4.0,
+                                        color: Color.fromARGB(128, 0, 0, 0),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ],
+                        );
+                      },
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          ])
+        ]));
+  }
+}
+
+class _CardInfoSmall extends StatelessWidget {
+  final carManagementCubit;
+
+  const _CardInfoSmall({
+    required this.carManagementCubit,
+    super.key,
+  });
+  @override
+  Widget build(BuildContext context) {
+    final size = MediaQuery.of(context).size;
+    return Container(
+      padding: EdgeInsets.symmetric(horizontal: 20),
+      width: size.width * 1,
+      child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+        FittedBox(
+          fit: BoxFit.scaleDown,
+          child: Text('Su Vehiculo',
+              style: TextStyle(
+                  fontSize: 35,
+                  fontFamily: 'Poppins',
+                  fontWeight: FontWeight.bold)),
+        ),
+        SizedBox(height: 05),
+        Expanded(
+          child: ListView.builder(
+            itemCount: carManagementCubit.state.carsOrderService.length,
+            itemBuilder: (context, index) {
+              CarOrderService info =
+                  carManagementCubit.state.carsOrderService[index];
+              return LayoutBuilder(
+                builder: (context, constraints) {
+                  return Container(
+                    margin: EdgeInsets.only(bottom: 15),
+                    width: size.width * 0.4,
+                    height: constraints.maxWidth * 0.18,
+                    decoration: BoxDecoration(
+                      color: Color(0xFF0443A0),
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Flexible(
+                          flex: 2,
+                          child: Container(
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceAround,
+                              children: [
+                                Container(
+                                  width: constraints.maxWidth * 0.20,
+                                  height: constraints.maxWidth * 0.25,
+                                  child: Center(
+                                    child: FittedBox(
+                                      fit: BoxFit.scaleDown,
+                                      child: Text(
+                                        'Placa \n ${info.licensePlate}',
+                                        textAlign: TextAlign.center,
+                                        style: TextStyle(
+                                          color: Colors.white,
+                                          fontSize:
+                                              constraints.maxWidth * 0.045,
+                                          fontWeight: FontWeight.bold,
+                                          shadows: [
+                                            Shadow(
+                                              offset: Offset(2.0, 2.0),
+                                              blurRadius: 4.0,
+                                              color:
+                                                  Color.fromARGB(128, 0, 0, 0),
+                                            )
+                                          ],
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                                Container(
+                                  width: size.width * 0.38,
+                                  height: constraints.maxWidth * 1,
+                                  margin: EdgeInsets.symmetric(horizontal: 5),
+                                  child: Column(
+                                    children: [
+                                      FittedBox(
+                                        fit: BoxFit.scaleDown,
+                                        child: Text(
+                                          info.modelo.toUpperCase(),
+                                          textAlign: TextAlign.center,
+                                          style: TextStyle(
+                                            color: Colors.white,
+                                            fontSize:
+                                                constraints.maxWidth * 0.04,
+                                            fontWeight: FontWeight.bold,
+                                            shadows: [
+                                              Shadow(
+                                                offset: Offset(2.0, 2.0),
+                                                blurRadius: 4.0,
+                                                color: Color.fromARGB(
+                                                    128, 0, 0, 0),
+                                              )
+                                            ],
+                                          ),
+                                        ),
+                                      ),
+                                      Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          SizedBox(height: 2),
+                                          FittedBox(
+                                            fit: BoxFit.scaleDown,
+                                            child: Text(
+                                              info.name,
+                                              maxLines: 2,
+                                              overflow: TextOverflow.ellipsis,
+                                              style: TextStyle(
+                                                color: Colors.white,
+                                                fontSize:
+                                                    constraints.maxWidth * 0.04,
+                                              ),
+                                            ),
+                                          ),
+                                          SizedBox(height: 2),
+                                          FittedBox(
+                                            fit: BoxFit.scaleDown,
+                                            child: Text(
+                                              'Asignado a: ${info.assignedTo}',
+                                              maxLines: 2,
+                                              overflow: TextOverflow.ellipsis,
+                                              style: TextStyle(
+                                                color: Colors.white,
+                                                fontSize:
+                                                    constraints.maxWidth * 0.04,
+                                              ),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                        Flexible(
+                          flex: 1,
+                          child: Container(
+                            height: 140,
+                            decoration: BoxDecoration(
+                              color: Color.fromARGB(255, 255, 255, 255)
+                                  .withOpacity(0.8),
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                            child: Expanded(
+                              child: _StateCard(
+                                status: info.status.toString(),
+                                time: info.deliveryTime.toString(),
+                              ),
+                            ),
+                          ),
+                        )
+                      ],
+                    ),
+                  );
+                },
+              );
+            },
           ),
-        )
-      ],
+        ),
+      ]),
     );
   }
 }
