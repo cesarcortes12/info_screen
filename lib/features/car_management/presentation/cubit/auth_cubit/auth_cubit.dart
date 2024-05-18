@@ -2,23 +2,32 @@ import 'dart:convert';
 
 import 'package:bloc/bloc.dart';
 import 'package:pantalla_informativa/features/car_management/domain/entities/user.dart';
+import 'package:pantalla_informativa/features/car_management/domain/repositories/car_management_repository.dart';
+import 'package:pantalla_informativa/features/shared/services/key_value_storage_service.dart';
 
 part 'auth_state.dart';
 
 class AuthCubit extends Cubit<AuthState> {
-  AuthCubit() : super(const AuthState()) {
+  final CarManagementRepository carManagementRepository;
+  final KeyValueStorageService keyValueStorageService;
+
+  AuthCubit(
+      {required this.carManagementRepository,
+      required this.keyValueStorageService})
+      : super(const AuthState()) {
     checkAuthStatus();
   }
 
   AuthStatus get authStatus => state.authStatus;
 
-  Future<void> loginUser(String username, String password) async {
+  Future<void> loginUser(
+      String bussines, String username, String password) async {
     await Future.delayed(const Duration(milliseconds: 500));
 
     try {
-      //final User? user =
-      //await authRepository.login(bussines, username, password);
-      //_setLoggedUser(user);
+      final User? user =
+          await carManagementRepository.login(bussines, username, password);
+      _setLoggedUser(user);
     } on CustomError catch (e) {
       emit(state.copyWith(errorMessage: e.message));
       logout(e.message);
@@ -43,7 +52,7 @@ class AuthCubit extends Cubit<AuthState> {
   }
 
   void _setLoggedUser(User? user) async {
-    //await keyValueStorageService.saveToken(user?.token ?? '');
+    await keyValueStorageService.saveToken(user?.token ?? '');
     //await keyValueStorageService.saveUser(user);
 
     emit(state.copyWith(

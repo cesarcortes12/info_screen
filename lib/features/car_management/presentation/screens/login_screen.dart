@@ -153,7 +153,13 @@ class _LoginForm extends StatelessWidget {
               style: textStyles.headlineSmall!.copyWith(
                   color: Color(0xFF27499b), fontWeight: FontWeight.bold),
             ),
-
+            const SizedBox(height: 10),
+            CustomTextFormField(
+              label: 'Empresa',
+              keyboardType: TextInputType.text,
+              onChanged: (value) => loginFormCubit.businessChanged(value),
+              errorMessage: loginFormCubit.state.business.errorMenssage,
+            ),
             const SizedBox(height: 10),
             CustomTextFormField(
               label: 'Nombre de usuario',
@@ -176,7 +182,7 @@ class _LoginForm extends StatelessWidget {
                 text: 'Ingresar',
                 onPressed: () async {
                   //GoRouter.of(context).go('/');
-                  Navigator.pushNamed(context, '/info');
+                  //Navigator.pushNamed(context, '/info');
 
                   //if (!loginCubit.state.isPosting) {
                   loginFormCubit.onSumit();

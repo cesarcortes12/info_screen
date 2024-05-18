@@ -7,13 +7,18 @@ import 'package:pantalla_informativa/features/car_management/presentation/cubit/
 import 'package:pantalla_informativa/features/car_management/presentation/presentation.dart';
 import 'package:pantalla_informativa/features/car_management/presentation/screens/workshop_list_screen.dart';
 import 'package:pantalla_informativa/features/car_management/presentation/screens/login_screen.dart';
+import 'package:pantalla_informativa/features/shared/services/key_value_storage_service_impl.dart';
 // ignore: depend_on_referenced_packages
 
 void main() {
   final carOrderServiceRepositoryimpl = CarOrderServiceRepositoryimpl();
+  final keyValueStorageService = KeyValueStorageServiceImpl();
+
   runApp(MultiBlocProvider(providers: [
     BlocProvider(
-      create: (context) => AuthCubit(),
+      create: (context) => AuthCubit(
+          carManagementRepository: carOrderServiceRepositoryimpl,
+          keyValueStorageService: keyValueStorageService),
     ),
     BlocProvider(
       create: (context) => LoginFormCubit(authCubit: context.read<AuthCubit>()),

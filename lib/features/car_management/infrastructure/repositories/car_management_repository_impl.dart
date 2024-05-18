@@ -12,4 +12,9 @@ class CarOrderServiceRepositoryimpl extends CarManagementRepository {
   Future<List<CarOrderService>> getCarsOrderService(int idWarehouse) {
     return carOrderdatasource.getCarsOrderService(idWarehouse);
   }
+
+  @override
+  Future<User> login(String bussines, String nameUser, String password) {
+    return carOrderdatasource.login(bussines, nameUser, password);
+  }
 }

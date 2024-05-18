@@ -9,6 +9,7 @@ class LoginState {
   final FormStatus formStatus;
   final UsernameInput username;
   final PasswordInput password;
+  final BusinessInput business;
   final LoadingStatus? loaded;
   final bool isFormPosted;
   final bool isPosting;
@@ -19,6 +20,7 @@ class LoginState {
     this.formStatus = FormStatus.invalid,
     this.username = const UsernameInput.pure(),
     this.password = const PasswordInput.pure(),
+    this.business = const BusinessInput.pure(),
     this.loaded = LoadingStatus.initial,
     this.isPosting = false,
   });
@@ -28,6 +30,7 @@ class LoginState {
     FormStatus? formStatus,
     UsernameInput? username,
     PasswordInput? password,
+    BusinessInput? business,
     LoadingStatus? loaded,
     bool? isFormPosted,
     bool? isPosting,
@@ -37,6 +40,7 @@ class LoginState {
         formStatus: formStatus ?? this.formStatus,
         username: username ?? this.username,
         password: password ?? this.password,
+        business: business ?? this.business,
         loaded: loaded ?? this.loaded,
         isFormPosted: isFormPosted ?? this.isFormPosted,
         isPosting: isPosting ?? this.isPosting,
