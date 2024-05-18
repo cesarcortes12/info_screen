@@ -4,17 +4,17 @@ enum FormStatus { invalid, valid, validating, posting }
 
 enum LoadingStatus { initial, checking, success }
 
-class LoginState {
+class LoginFormState {
   final bool isFormValid;
   final FormStatus formStatus;
   final UsernameInput username;
   final PasswordInput password;
   final BusinessInput business;
-  final LoadingStatus? loaded;
+  final LoadingStatus loaded;
   final bool isFormPosted;
   final bool isPosting;
 
-  const LoginState({
+  const LoginFormState({
     this.isFormPosted = false,
     this.isFormValid = false,
     this.formStatus = FormStatus.invalid,
@@ -25,7 +25,7 @@ class LoginState {
     this.isPosting = false,
   });
 
-  LoginState copyWith({
+  LoginFormState copyWith({
     bool? isFormValid,
     FormStatus? formStatus,
     UsernameInput? username,
@@ -35,7 +35,7 @@ class LoginState {
     bool? isFormPosted,
     bool? isPosting,
   }) =>
-      LoginState(
+      LoginFormState(
         isFormValid: isFormValid ?? this.isFormValid,
         formStatus: formStatus ?? this.formStatus,
         username: username ?? this.username,

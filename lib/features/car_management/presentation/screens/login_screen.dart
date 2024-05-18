@@ -130,20 +130,19 @@ class _LoginForm extends StatelessWidget {
     final loginFormCubit = context.read<LoginFormCubit>();
     final scaffoldKey = ScaffoldMessenger.of(context);
 
-    return BlocListener<AuthCubit, AuthState>(listener: (context, state) {
-      print('errorMessage ${state.errorMessage}');
-      if (state.errorMessage != '') {
-        scaffoldKey.showSnackBar(SnackBar(
-          backgroundColor: Colors.red,
-          content: Text(
-            state.errorMessage,
-          ),
-        ));
-      }
-    }, child: BlocBuilder<LoginFormCubit, LoginState>(
-      builder: (context, state) {
-        return //SingleChildScrollView(
-            Column(
+    return BlocListener<AuthCubit, AuthState>(
+        listener: (context, state) {
+          print('errorMessage ${state.errorMessage}');
+          if (state.errorMessage != '') {
+            scaffoldKey.showSnackBar(SnackBar(
+              backgroundColor: Colors.red,
+              content: Text(
+                state.errorMessage,
+              ),
+            ));
+          }
+        },
+        child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
@@ -175,27 +174,33 @@ class _LoginForm extends StatelessWidget {
               errorMessage: loginFormCubit.state.password.errorMenssage,
             ),
             const SizedBox(height: 10),
-            SizedBox(
-              width: double.infinity,
-              height: 50,
-              child: CustomFilledButton(
-                text: 'Ingresar',
-                onPressed: () async {
-                  //GoRouter.of(context).go('/');
-                  //Navigator.pushNamed(context, '/info');
+            BlocBuilder<LoginFormCubit, LoginFormState>(
+              builder: (context, state) {
+                return SizedBox(
+                  width: double.infinity,
+                  height: 50,
+                  child: CustomFilledButton(
+                    text: loginFormCubit.state.loaded == LoadingStatus.checking
+                        ? const CircularProgressIndicator(strokeWidth: 4)
+                        : Text('INICIAR SESION'),
+                    onPressed: () async {
+                      //GoRouter.of(context).go('/');
 
-                  //if (!loginCubit.state.isPosting) {
-                  loginFormCubit.onSumit();
-                  //}
-                },
-              ),
+                      //if (!loginCubit.state.isPosting) {
+                      await loginFormCubit.onSumit();
+                      if (loginFormCubit.state.loaded ==
+                          LoadingStatus.success) {
+                        Navigator.pushNamed(context, '/info');
+                      }
+                      //}
+                    },
+                  ),
+                );
+              },
             ),
             // const Spacer(flex: 1),
             // const Spacer(flex: 1),
           ],
-        );
-        //);
-      },
-    ));
+        ));
   }
 }

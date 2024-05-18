@@ -173,7 +173,7 @@ class _WarehauseCardState extends State<WarehauseCard> {
                   Padding(
                     padding: const EdgeInsets.only(right: 50),
                     child: CustomFilledButton(
-                      text: 'Ingresar',
+                      text: Text('Ingresar'),
                       onPressed: () async {
                         //GoRouter.of(context).go('/');
                         Navigator.pushNamed(context, '/infoScreen');
@@ -261,7 +261,7 @@ class _WarehauseCardState extends State<WarehauseCard> {
                             Padding(
                               padding: const EdgeInsets.only(right: 50),
                               child: CustomFilledButton(
-                                text: 'Ingresar',
+                                text: Text('Ingresar'),
                                 onPressed: () async {
                                   //GoRouter.of(context).go('/');
                                   Navigator.pushNamed(context, '/info');

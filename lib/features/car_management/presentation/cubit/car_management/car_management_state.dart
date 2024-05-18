@@ -1,11 +1,8 @@
-
-
-
 part of 'car_management_cubit.dart';
 
 enum LoadingStatus { initial, checking, success }
 
-class CarManagementState extends Equatable  {
+class CarManagementState /*extends Equatable*/ {
   final List<Auto> autos;
   final List<CarOrderService> carsOrderService;
   final LoadingStatus? loaded;
@@ -26,8 +23,7 @@ class CarManagementState extends Equatable  {
         carsOrderService: carsOrderService ?? this.carsOrderService,
         loaded: loaded ?? this.loaded,
       );
-      
-        @override
-        
-        List<Object?> get props => [autos, carsOrderService, loaded];
+
+  //@override
+  //List<Object?> get props => [autos, carsOrderService, loaded];
 }

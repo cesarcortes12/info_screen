@@ -2,7 +2,6 @@ import 'package:bloc/bloc.dart';
 import 'package:pantalla_informativa/features/car_management/domain/entities/auto.dart';
 import 'package:pantalla_informativa/features/car_management/domain/entities/car_order_service.dart';
 import 'package:pantalla_informativa/features/car_management/infrastructure/repositories/car_management_repository_impl.dart';
-import 'package:equatable/equatable.dart';
 
 part 'car_management_state.dart';
 

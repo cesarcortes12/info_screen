@@ -28,15 +28,16 @@ class CarOrderServiceDatasourceimpl extends CarManagementDatasource {
   @override
   Future<User> login(String bussines, String nameUser, String password) async {
     try {
-      final logindata = {
-        'codigoEmpresa': bussines,
-        'usuario': nameUser,
-        'clave': password
-      };
-      
-      final response = await client.post(headers: {
-        'Content-Type': 'application/json',
-      }, Uri.parse('${Environment.apiUrl}/Auth'), body: jsonEncode(logindata));
+      final response = await client.post(
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          Uri.parse('${Environment.apiUrl}/Auth'),
+          body: jsonEncode({
+            'codigoEmpresa': bussines,
+            'usuario': nameUser,
+            'clave': password
+          }));
       final responseJson = json.decode(response.body);
       if (responseJson['data'] == null) {
         throw CustomError(responseJson['message']);

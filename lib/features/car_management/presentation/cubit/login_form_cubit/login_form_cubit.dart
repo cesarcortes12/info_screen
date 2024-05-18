@@ -7,9 +7,9 @@ import 'package:pantalla_informativa/features/shared/inputs/userName.dart';
 
 part 'login_form_state.dart';
 
-class LoginFormCubit extends Cubit<LoginState> {
+class LoginFormCubit extends Cubit<LoginFormState> {
   final AuthCubit authCubit;
-  LoginFormCubit({required this.authCubit}) : super(const LoginState());
+  LoginFormCubit({required this.authCubit}) : super(const LoginFormState());
 
   Future<void> onSumit() async {
     _validatingstate();
@@ -54,6 +54,6 @@ class LoginFormCubit extends Cubit<LoginState> {
   }
 
   void reset() {
-    emit(const LoginState());
+    emit(const LoginFormState());
   }
 }
