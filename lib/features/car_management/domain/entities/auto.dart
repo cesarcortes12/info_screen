@@ -1,9 +1,13 @@
 class Auto {
   String name;
-  String? position;
+  String? city;
+  String address;
+  String phone;
 
   Auto({
     required this.name,
-    required this.position,
+    required this.city,
+    required this.address,
+    required this.phone,
   });
 }

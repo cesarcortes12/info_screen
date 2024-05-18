@@ -29,26 +29,29 @@ class _WorkshopListScreenState extends State<WorkshopListScreen> {
       appBar: AppBar(
         title: Center(
           child: Text(
-            'lista!!',
+            'Bodegas',
             style: TextStyle(color: Colors.white),
           ),
         ),
-        backgroundColor: Color.fromARGB(255, 4, 67, 160),
+        //backgroundColor: Color.fromARGB(255, 4, 67, 160),
       ),
       body: BlocBuilder<CarManagementCubit, CarManagementState>(
         builder: (context, state) {
-          return (state.autos.length != 0)
-              ? Container(
-                  margin:
-                      const EdgeInsets.symmetric(horizontal: 5, vertical: 5),
-                  child: ListView.builder(
-                    itemCount: state.autos.length,
-                    itemBuilder: (BuildContext context, int index) {
-                      Auto wareHause = state.autos[index];
-                      //print('wareHause ${wareHause}');
-                      return WarehauseCard(warehause: wareHause);
-                    },
-                  ),
+          return (state.autos.isNotEmpty)
+              ? Align(
+                  alignment: Alignment.topCenter,
+                  child: Container(
+                      width: 800,
+                      margin: const EdgeInsets.symmetric(
+                          horizontal: 10, vertical: 10),
+                      child: ListView.builder(
+                        itemCount: state.autos.length,
+                        itemBuilder: (BuildContext context, int index) {
+                          Auto wareHause = state.autos[index];
+                          //print('wareHause ${wareHause}');
+                          return WarehauseCard(warehause: wareHause);
+                        },
+                      )),
                 )
               : const CustomEmptyState(message: 'No hay bodegas para mostrar');
         },
@@ -81,73 +84,201 @@ class _WarehauseCardState extends State<WarehauseCard> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: MediaQuery.of(context).size.width,
-      margin: const EdgeInsets.symmetric(vertical: 5),
-      decoration: BoxDecoration(
-          color: const Color(0xFF003F5A),
-          borderRadius: BorderRadius.circular(10)),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceAround,
-        children: [
-          Container(
-            //width: 125,
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                const Align(
-                    alignment: Alignment.centerLeft,
-                    child: Text(
-                      'BODEGA',
-                    )),
-                Align(
-                  alignment: Alignment.centerLeft,
-                  child: Text(
-                    'HOLAA ${widget.warehause.name}',
-                    maxLines: 3,
-                    style: const TextStyle(fontSize: 11, color: Colors.white),
-                  ),
+    final size = MediaQuery.of(context).size;
+
+    return LayoutBuilder(builder: (context, constraints) {
+      return constraints.maxWidth > 500
+          ? Container(
+              margin: EdgeInsets.all(10),
+              //width: size.width * 0.4,
+              height: 150,
+              width: 80,
+              decoration: BoxDecoration(
+                //color: Color(0xFF0443A0),
+                borderRadius: BorderRadius.circular(7),
+                color: Colors.white,
+                border: Border.all(
+                  color: Color.fromARGB(255, 216, 216, 216),
+                  width: 1.0, // Ajusta el ancho del borde aquí
                 ),
-              ],
-            ),
-          ),
-          Flexible(
-            child: SizedBox(
-              height: 100,
-              width: 100,
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.grey.withOpacity(0.1),
+                    spreadRadius: 5,
+                    blurRadius: 7,
+                    offset: Offset(0, 3), // changes position of shadow
+                  ),
+                ],
+              ),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Container(
-                    margin: const EdgeInsets.only(right: 5),
-                    height: 35,
-                    width: 100,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(5),
-                    ),
+                  Row(
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.only(left: 30.0),
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.circular(7),
+                          child: Image(
+                            image: AssetImage('assets/images/img_workshop.jpg'),
+                            width: 100,
+                          ),
+                        ),
+                      ),
+                      Center(
+                        child: Container(
+                          width: 200,
+                          height: 97,
+                          padding: EdgeInsets.only(left: 20.0),
+                          child: Column(
+                            children: [
+                              Align(
+                                alignment: Alignment.centerLeft,
+                                child: Text(
+                                  widget.warehause.name,
+                                  style: TextStyle(
+                                    //color: Colors.white,
+                                    fontSize: 22,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                              ),
+                              Align(
+                                alignment: Alignment.centerLeft,
+                                child: Text(' ${widget.warehause.address}',
+                                    style: TextStyle(
+                                        //color: Colors.white
+                                        )),
+                              ),
+                              Align(
+                                alignment: Alignment.centerLeft,
+                                child: Text(' ${widget.warehause.city}',
+                                    style: TextStyle(
+                                        //color: Colors.white
+                                        )),
+                              ),
+                              Align(
+                                alignment: Alignment.centerLeft,
+                                child: Text(' ${widget.warehause.phone}',
+                                    style: TextStyle(
+                                        //color: Colors.white
+                                        )),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(right: 50),
                     child: CustomFilledButton(
                       text: 'Ingresar',
                       onPressed: () async {
                         //GoRouter.of(context).go('/');
-                        Navigator.pushNamed(context, '/info');
+                        Navigator.pushNamed(context, '/infoScreen');
 
-                        //if (!loginCubit.state.isPosting) {
-                        //loginFormCubit.onSumit();
                         //}
                       },
                     ),
                   ),
-                  const SizedBox(
-                    height: 7,
+                ],
+              ),
+            )
+          : Container(
+              margin: EdgeInsets.all(10),
+              //width: size.width * 0.4,
+              height: 200,
+              width: 80,
+              decoration: BoxDecoration(
+                //color: Color(0xFF0443A0),
+                borderRadius: BorderRadius.circular(7),
+                color: Colors.white,
+                border: Border.all(
+                  color: Color.fromARGB(255, 216, 216, 216),
+                  width: 1.0, // Ajusta el ancho del borde aquí
+                ),
+                boxShadow: [
+                  BoxShadow(
+                    color:
+                        const Color.fromARGB(255, 148, 42, 42).withOpacity(0.2),
+                    spreadRadius: 5,
+                    blurRadius: 7,
+                    offset: Offset(0, 3), // changes position of shadow
                   ),
                 ],
               ),
-            ),
-          )
-        ],
-      ),
-    );
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Row(
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.only(left: 30.0),
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.circular(7),
+                          child: Image(
+                            image: AssetImage('assets/images/img_workshop.jpg'),
+                            width: 100,
+                          ),
+                        ),
+                      ),
+                      Center(
+                        child: Column(
+                          children: [
+                            Align(
+                              alignment: Alignment.centerLeft,
+                              child: Text(
+                                widget.warehause.name,
+                                style: TextStyle(
+                                  //color: Colors.white,
+                                  fontSize: 22,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                            ),
+                            Align(
+                              alignment: Alignment.centerLeft,
+                              child: Text(' ${widget.warehause.address}',
+                                  style: TextStyle(
+                                      //color: Colors.white
+                                      )),
+                            ),
+                            Align(
+                              alignment: Alignment.centerLeft,
+                              child: Text(' ${widget.warehause.city}',
+                                  style: TextStyle(
+                                      //color: Colors.white
+                                      )),
+                            ),
+                            Align(
+                              alignment: Alignment.centerLeft,
+                              child: Text(' ${widget.warehause.phone}',
+                                  style: TextStyle(
+                                      //color: Colors.white
+                                      )),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.only(right: 50),
+                              child: CustomFilledButton(
+                                text: 'Ingresar',
+                                onPressed: () async {
+                                  //GoRouter.of(context).go('/');
+                                  Navigator.pushNamed(context, '/info');
+
+                                  //}
+                                },
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            );
+    });
   }
 }
 
