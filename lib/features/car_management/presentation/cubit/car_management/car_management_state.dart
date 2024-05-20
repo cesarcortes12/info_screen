@@ -3,23 +3,24 @@ part of 'car_management_cubit.dart';
 enum LoadingStatus { initial, checking, success }
 
 class CarManagementState /*extends Equatable*/ {
-  final List<Auto> autos;
+  final List<Warehouse> allWarehouses;
   final List<CarOrderService> carsOrderService;
   final LoadingStatus? loaded;
 
-  CarManagementState({
-    this.autos = const [],
+  CarManagementState( {
+    this.allWarehouses = const [],
     this.carsOrderService = const [],
     this.loaded = LoadingStatus.initial,
+    
   });
 
   CarManagementState copyWith({
-    List<Auto>? autos,
+    List<Warehouse>? allWarehouses,
     List<CarOrderService>? carsOrderService,
     LoadingStatus? loaded,
   }) =>
       CarManagementState(
-        autos: autos ?? this.autos,
+        allWarehouses: allWarehouses ?? this.allWarehouses,
         carsOrderService: carsOrderService ?? this.carsOrderService,
         loaded: loaded ?? this.loaded,
       );

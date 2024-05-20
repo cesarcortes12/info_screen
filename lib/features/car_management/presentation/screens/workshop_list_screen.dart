@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:go_router/go_router.dart';
-import 'package:pantalla_informativa/features/car_management/domain/entities/auto.dart';
+import 'package:pantalla_informativa/features/car_management/domain/entities/warehouse.dart';
 import 'package:pantalla_informativa/features/car_management/presentation/cubit/car_management/car_management_cubit.dart';
 import 'package:pantalla_informativa/features/widgets/custom_filled_button.dart';
 
@@ -19,7 +19,7 @@ class _WorkshopListScreenState extends State<WorkshopListScreen> {
   void initState() {
     super.initState();
     pickingCubit = BlocProvider.of<CarManagementCubit>(context);
-    pickingCubit.getWorkShop();
+    pickingCubit.getWarehouses(false);
   }
 
   @override
@@ -39,42 +39,51 @@ class _WorkshopListScreenState extends State<WorkshopListScreen> {
       ),
       body: BlocBuilder<CarManagementCubit, CarManagementState>(
         builder: (context, state) {
-          return (state.autos.isNotEmpty)
-              ? Align(
-                  alignment: Alignment.topCenter,
-                  child: Container(
-                      width: 800,
-                      margin: const EdgeInsets.symmetric(
-                          horizontal: 10, vertical: 10),
-                      child: ListView.builder(
-                        itemCount: state.autos.length,
-                        itemBuilder: (BuildContext context, int index) {
-                          Auto wareHause = state.autos[index];
-                          //print('wareHause ${wareHause}');
-                          return WarehauseCard(warehause: wareHause);
-                        },
-                      )),
-                )
-              : const CustomEmptyState(message: 'No hay bodegas para mostrar');
+          return (pickingCubit.state.loaded ==
+                  LoadingStatus.checking) /*(state.allWarehouses.isNotEmpty)*/
+              ? const CircularProgressIndicator(strokeWidth: 4)
+              : SingleChildScrollView(
+                  child: Align(
+                    alignment: Alignment.topCenter,
+                    child: Container(
+                        width: 800,
+                        margin: const EdgeInsets.symmetric(
+                            horizontal: 10, vertical: 10),
+                        child: (pickingCubit.state.allWarehouses.isEmpty)
+                            ? const CustomEmptyState(
+                                message: 'No hay bodegas para mostrar')
+                            : ListView.builder(
+                                shrinkWrap: true,
+                                physics: NeverScrollableScrollPhysics(),
+                                itemCount: state.allWarehouses.length,
+                                itemBuilder: (BuildContext context, int index) {
+                                  Warehouse wareHouse =
+                                      state.allWarehouses[index];
+                                  //print('wareHause ${wareHause}');
+                                  return WarehouseCard(warehouse: wareHouse);
+                                },
+                              )),
+                  ),
+                );
         },
       ),
     );
   }
 }
 
-class WarehauseCard extends StatefulWidget {
-  final Auto warehause;
+class WarehouseCard extends StatefulWidget {
+  final Warehouse warehouse;
 
-  const WarehauseCard({
-    required this.warehause,
+  const WarehouseCard({
+    required this.warehouse,
     super.key,
   });
 
   @override
-  State<WarehauseCard> createState() => _WarehauseCardState();
+  State<WarehouseCard> createState() => _WarehouseCardState();
 }
 
-class _WarehauseCardState extends State<WarehauseCard> {
+class _WarehouseCardState extends State<WarehouseCard> {
   //late PickingCubit pickingCubit;
   @override
   void initState() {
@@ -89,12 +98,13 @@ class _WarehauseCardState extends State<WarehauseCard> {
     final size = MediaQuery.of(context).size;
 
     return LayoutBuilder(builder: (context, constraints) {
-      return constraints.maxWidth > 500
+      return constraints.maxWidth > 770
           ? Container(
-              margin: EdgeInsets.all(10),
+              margin: EdgeInsets.all(8),
+              padding: EdgeInsets.all(12),
               //width: size.width * 0.4,
-              height: 150,
-              width: 80,
+              //height: 150,
+              //width: 80,
               decoration: BoxDecoration(
                 //color: Color(0xFF0443A0),
                 borderRadius: BorderRadius.circular(7),
@@ -115,62 +125,39 @@ class _WarehauseCardState extends State<WarehauseCard> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Row(
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.only(left: 30.0),
-                        child: ClipRRect(
-                          borderRadius: BorderRadius.circular(7),
-                          child: Image(
-                            image: AssetImage('assets/images/img_workshop.jpg'),
-                            width: 100,
-                          ),
+                  Center(
+                    child: Container(
+                      //width: 600,
+                      //height: 100,
+                      //padding: EdgeInsets.only(left: 20.0),
+                      child: Flexible(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              widget.warehouse.name,
+                              style: TextStyle(
+                                //color: Colors.white,
+                                fontSize: 22,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                            Text(' ${widget.warehouse.address}',
+                                style: TextStyle(
+                                    //color: Colors.white
+                                    )),
+                            Text(' ${widget.warehouse.city}',
+                                style: TextStyle(
+                                    //color: Colors.white
+                                    )),
+                            Text(' ${widget.warehouse.phone}',
+                                style: TextStyle(
+                                    //color: Colors.white
+                                    )),
+                          ],
                         ),
                       ),
-                      Center(
-                        child: Container(
-                          width: 200,
-                          height: 97,
-                          padding: EdgeInsets.only(left: 20.0),
-                          child: Column(
-                            children: [
-                              Align(
-                                alignment: Alignment.centerLeft,
-                                child: Text(
-                                  widget.warehause.name,
-                                  style: TextStyle(
-                                    //color: Colors.white,
-                                    fontSize: 22,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                ),
-                              ),
-                              Align(
-                                alignment: Alignment.centerLeft,
-                                child: Text(' ${widget.warehause.address}',
-                                    style: TextStyle(
-                                        //color: Colors.white
-                                        )),
-                              ),
-                              Align(
-                                alignment: Alignment.centerLeft,
-                                child: Text(' ${widget.warehause.city}',
-                                    style: TextStyle(
-                                        //color: Colors.white
-                                        )),
-                              ),
-                              Align(
-                                alignment: Alignment.centerLeft,
-                                child: Text(' ${widget.warehause.phone}',
-                                    style: TextStyle(
-                                        //color: Colors.white
-                                        )),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                    ],
+                    ),
                   ),
                   Padding(
                     padding: const EdgeInsets.only(right: 50),
@@ -185,10 +172,11 @@ class _WarehauseCardState extends State<WarehauseCard> {
               ),
             )
           : Container(
-              margin: EdgeInsets.all(10),
+              margin: EdgeInsets.all(8),
+              padding: EdgeInsets.all(8.0),
               //width: size.width * 0.4,
-              height: 200,
-              width: 80,
+              //height: 200,
+              //width: 70,
               decoration: BoxDecoration(
                 //color: Color(0xFF0443A0),
                 borderRadius: BorderRadius.circular(7),
@@ -199,81 +187,39 @@ class _WarehauseCardState extends State<WarehauseCard> {
                 ),
                 boxShadow: [
                   BoxShadow(
-                    color:
-                        const Color.fromARGB(255, 148, 42, 42).withOpacity(0.2),
+                    color: Colors.grey.withOpacity(0.1),
                     spreadRadius: 5,
                     blurRadius: 7,
                     offset: Offset(0, 3), // changes position of shadow
                   ),
                 ],
               ),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Row(
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.only(left: 30.0),
-                        child: ClipRRect(
-                          borderRadius: BorderRadius.circular(7),
-                          child: Image(
-                            image: AssetImage('assets/images/img_workshop.jpg'),
-                            width: 100,
-                          ),
-                        ),
-                      ),
-                      Center(
-                        child: Column(
-                          children: [
-                            Align(
-                              alignment: Alignment.centerLeft,
-                              child: Text(
-                                widget.warehause.name,
-                                style: TextStyle(
-                                  //color: Colors.white,
-                                  fontSize: 22,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                            ),
-                            Align(
-                              alignment: Alignment.centerLeft,
-                              child: Text(' ${widget.warehause.address}',
-                                  style: TextStyle(
-                                      //color: Colors.white
-                                      )),
-                            ),
-                            Align(
-                              alignment: Alignment.centerLeft,
-                              child: Text(' ${widget.warehause.city}',
-                                  style: TextStyle(
-                                      //color: Colors.white
-                                      )),
-                            ),
-                            Align(
-                              alignment: Alignment.centerLeft,
-                              child: Text(' ${widget.warehause.phone}',
-                                  style: TextStyle(
-                                      //color: Colors.white
-                                      )),
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.only(right: 50),
-                              child: CustomFilledButton(
-                                text: Text('Ingresar'),
-                                onPressed: () async {
-                                  //GoRouter.of(context).go('/');
-                                  Navigator.pushNamed(context, '/info');
-
-                                  //}
-                                },
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ],
+                  Text(
+                    widget.warehouse.name,
+                    style: TextStyle(
+                      //color: Colors.white,
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
+                  const SizedBox(height: 5),
+                  Text(' ${widget.warehouse.address}',
+                      style: TextStyle(
+                          //color: Colors.white
+                          )),
+                  const SizedBox(height: 5),
+                  Text(' ${widget.warehouse.city}',
+                      style: TextStyle(
+                          //color: Colors.white
+                          )),
+                  const SizedBox(height: 5),
+                  Text(' ${widget.warehouse.phone}',
+                      style: TextStyle(
+                          //color: Colors.white
+                          )),
                 ],
               ),
             );
