@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:go_router/go_router.dart';
 import 'package:pantalla_informativa/features/car_management/domain/entities/auto.dart';
 import 'package:pantalla_informativa/features/car_management/presentation/cubit/car_management/car_management_cubit.dart';
 import 'package:pantalla_informativa/features/widgets/custom_filled_button.dart';
@@ -29,10 +30,11 @@ class _WorkshopListScreenState extends State<WorkshopListScreen> {
       appBar: AppBar(
         title: Center(
           child: Text(
-            'Bodegas',
+            'BODEGAS',
             style: TextStyle(color: Colors.white),
           ),
         ),
+
         //backgroundColor: Color.fromARGB(255, 4, 67, 160),
       ),
       body: BlocBuilder<CarManagementCubit, CarManagementState>(
@@ -175,10 +177,7 @@ class _WarehauseCardState extends State<WarehauseCard> {
                     child: CustomFilledButton(
                       text: Text('Ingresar'),
                       onPressed: () async {
-                        //GoRouter.of(context).go('/');
-                        Navigator.pushNamed(context, '/infoScreen');
-
-                        //}
+                        GoRouter.of(context).push('/info');
                       },
                     ),
                   ),

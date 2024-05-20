@@ -27,7 +27,9 @@ class AuthCubit extends Cubit<AuthState> {
     try {
       final User? user =
           await carManagementRepository.login(bussines, username, password);
+
       _setLoggedUser(user);
+      print('holaa');
     } on CustomError catch (e) {
       emit(state.copyWith(errorMessage: e.message));
       logout(e.message);
@@ -37,15 +39,16 @@ class AuthCubit extends Cubit<AuthState> {
   }
 
   void checkAuthStatus() async {
-    //final token = await keyValueStorageService.loadToken();
-
-    //if (token == null) return logout();
-    //final userJson = await keyValueStorageService.getValue<String>('user');
-
-    //final user = userJson != null ? User.fromJson(jsonDecode(userJson)) : null;
-
     try {
-      //_setLoggedUser(user);
+      final token = await keyValueStorageService.loadToken();
+
+      if (token == null) return logout();
+      final userJson = await keyValueStorageService.getValue<String>('user');
+
+      final user =
+          userJson != null ? User.fromJson(jsonDecode(userJson)) : null;
+
+      _setLoggedUser(user);
     } catch (e) {
       logout();
     }
@@ -53,7 +56,7 @@ class AuthCubit extends Cubit<AuthState> {
 
   void _setLoggedUser(User? user) async {
     await keyValueStorageService.saveToken(user?.token ?? '');
-    //await keyValueStorageService.saveUser(user);
+    await keyValueStorageService.saveUser(user);
 
     emit(state.copyWith(
       user: user,
@@ -63,7 +66,7 @@ class AuthCubit extends Cubit<AuthState> {
   }
 
   Future<void> logout([String? errorMessage]) async {
-    //await keyValueStorageService.removeKey('token');
+    await keyValueStorageService.removeKey('token');
 
     emit(state.copyWith(
       authStatus: AuthStatus.notAuthenticated,

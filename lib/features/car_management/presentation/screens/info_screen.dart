@@ -6,6 +6,7 @@ import 'package:flutter/painting.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 import 'package:pantalla_informativa/features/car_management/domain/domain.dart';
 import 'package:pantalla_informativa/features/car_management/presentation/cubit/car_management/car_management_cubit.dart';
 import 'package:pantalla_informativa/features/car_management/presentation/screens/workshop_list_screen.dart';
@@ -39,9 +40,7 @@ Color getColorForStatus(String state) {
 }
 
 class InfoScreen extends StatefulWidget {
-  String title = 'Info Screen';
-
-  InfoScreen({Key? key, required this.title}) : super(key: key);
+  InfoScreen({Key? key}) : super(key: key);
 
   @override
   State<InfoScreen> createState() => _InfoScreenState();
@@ -61,9 +60,15 @@ class _InfoScreenState extends State<InfoScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back),
+          onPressed: () {
+            GoRouter.of(context).pop();
+          },
+        ),
         title: Center(
           child: Text(
-            widget.title,
+            'INFORMACIÓN',
             style: TextStyle(color: Colors.white),
           ),
         ),

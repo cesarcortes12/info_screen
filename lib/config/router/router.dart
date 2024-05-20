@@ -1,6 +1,7 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:pantalla_informativa/features/car_management/presentation/cubit/auth_cubit/auth_cubit.dart';
+import 'package:pantalla_informativa/features/car_management/presentation/screens/info_screen.dart';
 import 'package:pantalla_informativa/features/car_management/presentation/screens/login_screen.dart';
 import 'package:pantalla_informativa/features/car_management/presentation/screens/workshop_list_screen.dart';
 
@@ -19,6 +20,18 @@ final appRouter = GoRouter(
             } else {
               return const LoginScreen();
             }
+          },
+        );
+      },
+    ),
+    GoRoute(
+      path: '/info',
+      builder: (context, state) {
+        //return const LoginScreen();
+
+        return BlocBuilder<AuthCubit, AuthState>(
+          builder: (context, authState) {
+            return InfoScreen();
           },
         );
       },

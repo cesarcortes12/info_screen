@@ -130,77 +130,70 @@ class _LoginForm extends StatelessWidget {
     final loginFormCubit = context.read<LoginFormCubit>();
     final scaffoldKey = ScaffoldMessenger.of(context);
 
-    return BlocListener<AuthCubit, AuthState>(
-        listener: (context, state) {
-          print('errorMessage ${state.errorMessage}');
-          if (state.errorMessage != '') {
-            scaffoldKey.showSnackBar(SnackBar(
-              backgroundColor: Colors.red,
-              content: Text(
-                state.errorMessage,
-              ),
-            ));
-          }
-        },
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            const SizedBox(height: 20),
-            Text(
-              'Inicio de Sesión',
-              style: textStyles.headlineSmall!.copyWith(
-                  color: Color(0xFF27499b), fontWeight: FontWeight.bold),
-            ),
-            const SizedBox(height: 10),
-            CustomTextFormField(
-              label: 'Empresa',
-              keyboardType: TextInputType.text,
-              onChanged: (value) => loginFormCubit.businessChanged(value),
-              errorMessage: loginFormCubit.state.business.errorMenssage,
-            ),
-            const SizedBox(height: 10),
-            CustomTextFormField(
-              label: 'Nombre de usuario',
-              keyboardType: TextInputType.emailAddress,
-              onChanged: (value) => loginFormCubit.usernameChanged(value),
-              errorMessage: loginFormCubit.state.username.errorMenssage,
-            ),
-            const SizedBox(height: 10),
-            CustomTextFormField(
-              label: 'Contraseña',
-              obscureText: true,
-              onChanged: (value) => loginFormCubit.passwordChanged(value),
-              errorMessage: loginFormCubit.state.password.errorMenssage,
-            ),
-            const SizedBox(height: 10),
-            BlocBuilder<LoginFormCubit, LoginFormState>(
-              builder: (context, state) {
-                return SizedBox(
-                  width: double.infinity,
-                  height: 50,
-                  child: CustomFilledButton(
-                    text: loginFormCubit.state.loaded == LoadingStatus.checking
-                        ? const CircularProgressIndicator(strokeWidth: 4)
-                        : Text('INICIAR SESION'),
-                    onPressed: () async {
-                      //GoRouter.of(context).go('/');
-
-                      //if (!loginCubit.state.isPosting) {
-                      await loginFormCubit.onSumit();
-                      if (loginFormCubit.state.loaded ==
-                          LoadingStatus.success) {
-                        Navigator.pushNamed(context, '/info');
-                      }
-                      //}
-                    },
-                  ),
-                );
-              },
-            ),
-            // const Spacer(flex: 1),
-            // const Spacer(flex: 1),
-          ],
+    return BlocListener<AuthCubit, AuthState>(listener: (context, state) {
+      print('errorMessage ${state.errorMessage}');
+      if (state.errorMessage != '') {
+        scaffoldKey.showSnackBar(SnackBar(
+          backgroundColor: Colors.red,
+          content: Text(
+            state.errorMessage,
+          ),
         ));
+      }
+    }, child:
+        BlocBuilder<LoginFormCubit, LoginFormState>(builder: (context, state) {
+      return Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          const SizedBox(height: 20),
+          Text(
+            'Inicio de Sesión',
+            style: textStyles.headlineSmall!.copyWith(
+                color: Color(0xFF27499b), fontWeight: FontWeight.bold),
+          ),
+          const SizedBox(height: 10),
+          CustomTextFormField(
+            label: 'Empresa',
+            keyboardType: TextInputType.text,
+            onChanged: (value) => loginFormCubit.businessChanged(value),
+            errorMessage: loginFormCubit.state.business.errorMenssage,
+          ),
+          const SizedBox(height: 10),
+          CustomTextFormField(
+            label: 'Nombre de usuario',
+            keyboardType: TextInputType.emailAddress,
+            onChanged: (value) => loginFormCubit.usernameChanged(value),
+            errorMessage: loginFormCubit.state.username.errorMenssage,
+          ),
+          const SizedBox(height: 10),
+          CustomTextFormField(
+            label: 'Contraseña',
+            obscureText: true,
+            onChanged: (value) => loginFormCubit.passwordChanged(value),
+            errorMessage: loginFormCubit.state.password.errorMenssage,
+          ),
+          const SizedBox(height: 10),
+          BlocBuilder<LoginFormCubit, LoginFormState>(
+            builder: (context, state) {
+              return SizedBox(
+                width: double.infinity,
+                height: 50,
+                child: CustomFilledButton(
+                  text: loginFormCubit.state.loaded == LoadingStatus.checking
+                      ? const CircularProgressIndicator(strokeWidth: 4)
+                      : Text('INICIAR SESION'),
+                  onPressed: () async {
+                    await loginFormCubit.onSumit();
+                  },
+                ),
+              );
+            },
+          ),
+          // const Spacer(flex: 1),
+          // const Spacer(flex: 1),
+        ],
+      );
+    }));
   }
 }
