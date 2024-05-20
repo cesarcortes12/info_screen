@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:pantalla_informativa/features/car_management/domain/entities/auto.dart';
+import 'package:pantalla_informativa/features/car_management/domain/entities/warehouse.dart';
 import 'package:pantalla_informativa/features/car_management/presentation/cubit/car_management/car_management_cubit.dart';
 import 'package:pantalla_informativa/features/widgets/custom_filled_button.dart';
 
@@ -18,7 +18,7 @@ class _WorkshopListScreenState extends State<WorkshopListScreen> {
   void initState() {
     super.initState();
     pickingCubit = BlocProvider.of<CarManagementCubit>(context);
-    pickingCubit.getWorkShop();
+    pickingCubit.getWarehouses(false);
   }
 
   @override
@@ -37,7 +37,7 @@ class _WorkshopListScreenState extends State<WorkshopListScreen> {
       ),
       body: BlocBuilder<CarManagementCubit, CarManagementState>(
         builder: (context, state) {
-          return (state.autos.isNotEmpty)
+          return (state.allWarehouses.isNotEmpty)
               ? Align(
                   alignment: Alignment.topCenter,
                   child: Container(
@@ -45,11 +45,11 @@ class _WorkshopListScreenState extends State<WorkshopListScreen> {
                       margin: const EdgeInsets.symmetric(
                           horizontal: 10, vertical: 10),
                       child: ListView.builder(
-                        itemCount: state.autos.length,
+                        itemCount: state.allWarehouses.length,
                         itemBuilder: (BuildContext context, int index) {
-                          Auto wareHause = state.autos[index];
+                          Warehouse wareHouse = state.allWarehouses[index];
                           //print('wareHause ${wareHause}');
-                          return WarehauseCard(warehause: wareHause);
+                          return WarehouseCard(warehouse: wareHouse);
                         },
                       )),
                 )
@@ -60,19 +60,19 @@ class _WorkshopListScreenState extends State<WorkshopListScreen> {
   }
 }
 
-class WarehauseCard extends StatefulWidget {
-  final Auto warehause;
+class WarehouseCard extends StatefulWidget {
+  final Warehouse warehouse;
 
-  const WarehauseCard({
-    required this.warehause,
+  const WarehouseCard({
+    required this.warehouse,
     super.key,
   });
 
   @override
-  State<WarehauseCard> createState() => _WarehauseCardState();
+  State<WarehouseCard> createState() => _WarehouseCardState();
 }
 
-class _WarehauseCardState extends State<WarehauseCard> {
+class _WarehouseCardState extends State<WarehouseCard> {
   //late PickingCubit pickingCubit;
   @override
   void initState() {
@@ -135,7 +135,7 @@ class _WarehauseCardState extends State<WarehauseCard> {
                               Align(
                                 alignment: Alignment.centerLeft,
                                 child: Text(
-                                  widget.warehause.name,
+                                  widget.warehouse.name,
                                   style: TextStyle(
                                     //color: Colors.white,
                                     fontSize: 22,
@@ -145,21 +145,21 @@ class _WarehauseCardState extends State<WarehauseCard> {
                               ),
                               Align(
                                 alignment: Alignment.centerLeft,
-                                child: Text(' ${widget.warehause.address}',
+                                child: Text(' ${widget.warehouse.address}',
                                     style: TextStyle(
                                         //color: Colors.white
                                         )),
                               ),
                               Align(
                                 alignment: Alignment.centerLeft,
-                                child: Text(' ${widget.warehause.city}',
+                                child: Text(' ${widget.warehouse.city}',
                                     style: TextStyle(
                                         //color: Colors.white
                                         )),
                               ),
                               Align(
                                 alignment: Alignment.centerLeft,
-                                child: Text(' ${widget.warehause.phone}',
+                                child: Text(' ${widget.warehouse.phone}',
                                     style: TextStyle(
                                         //color: Colors.white
                                         )),
@@ -229,7 +229,7 @@ class _WarehauseCardState extends State<WarehauseCard> {
                             Align(
                               alignment: Alignment.centerLeft,
                               child: Text(
-                                widget.warehause.name,
+                                widget.warehouse.name,
                                 style: TextStyle(
                                   //color: Colors.white,
                                   fontSize: 22,
@@ -239,21 +239,21 @@ class _WarehauseCardState extends State<WarehauseCard> {
                             ),
                             Align(
                               alignment: Alignment.centerLeft,
-                              child: Text(' ${widget.warehause.address}',
+                              child: Text(' ${widget.warehouse.address}',
                                   style: TextStyle(
                                       //color: Colors.white
                                       )),
                             ),
                             Align(
                               alignment: Alignment.centerLeft,
-                              child: Text(' ${widget.warehause.city}',
+                              child: Text(' ${widget.warehouse.city}',
                                   style: TextStyle(
                                       //color: Colors.white
                                       )),
                             ),
                             Align(
                               alignment: Alignment.centerLeft,
-                              child: Text(' ${widget.warehause.phone}',
+                              child: Text(' ${widget.warehouse.phone}',
                                   style: TextStyle(
                                       //color: Colors.white
                                       )),
