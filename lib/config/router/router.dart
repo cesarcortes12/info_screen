@@ -16,7 +16,7 @@ final appRouter = GoRouter(
         return BlocBuilder<AuthCubit, AuthState>(
           builder: (context, authState) {
             if (authState.authStatus == AuthStatus.authenticated) {
-              return InfoScreen();
+              return const WorkshopListScreen();
             } else {
               return const LoginScreen();
             }
@@ -25,13 +25,13 @@ final appRouter = GoRouter(
       },
     ),
     GoRoute(
-      path: '/info',
+      path: '/info/:idWarehouse',
       builder: (context, state) {
-        //return const LoginScreen();
+        final String idWarehouse = state.pathParameters['idWarehouse'] ?? '';
 
         return BlocBuilder<AuthCubit, AuthState>(
           builder: (context, authState) {
-            return InfoScreen();
+            return InfoScreen(idWarehouse: idWarehouse);
           },
         );
       },

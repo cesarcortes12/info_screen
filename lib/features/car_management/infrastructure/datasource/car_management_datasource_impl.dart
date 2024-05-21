@@ -19,7 +19,7 @@ class CarOrderServiceDatasourceimpl extends CarManagementDatasource {
   final keyValueStorageService = KeyValueStorageServiceImpl();
 
   @override
-  Future<dynamic> getCarsOrderService(int idWorkShop) async {
+  Future<dynamic> getCarsOrderService(int idWarehouse) async {
     try {
       final tokenObject =
           await keyValueStorageService.getValue<String>('token');
@@ -29,7 +29,7 @@ class CarOrderServiceDatasourceimpl extends CarManagementDatasource {
       String token = tokenMap['token'];
 
       final response = await client.get(
-        Uri.parse('${Environment.apiUrl}/CitasTaller/1'),
+        Uri.parse('${Environment.apiUrl}/CitasTaller/$idWarehouse'),
         headers: {
           'Authorization': 'Bearer ${token}',
           'Content-Type': 'application/json',

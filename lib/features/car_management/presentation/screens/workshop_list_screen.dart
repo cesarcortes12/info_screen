@@ -142,7 +142,7 @@ class _WarehouseCardState extends State<WarehouseCard> {
                                 fontWeight: FontWeight.bold,
                               ),
                             ),
-                            Text(' ${widget.warehouse.address}',
+                            Text(' ${widget.warehouse.name}',
                                 style: TextStyle(
                                     //color: Colors.white
                                     )),
@@ -164,7 +164,8 @@ class _WarehouseCardState extends State<WarehouseCard> {
                     child: CustomFilledButton(
                       text: Text('Ingresar'),
                       onPressed: () async {
-                        GoRouter.of(context).push('/info');
+                        GoRouter.of(context)
+                            .push('/info/${widget.warehouse.id}');
                       },
                     ),
                   ),
