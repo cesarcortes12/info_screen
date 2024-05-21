@@ -39,8 +39,7 @@ class _WorkshopListScreenState extends State<WorkshopListScreen> {
       ),
       body: BlocBuilder<CarManagementCubit, CarManagementState>(
         builder: (context, state) {
-          return (pickingCubit.state.loaded ==
-                  LoadingStatus.checking) /*(state.allWarehouses.isNotEmpty)*/
+          return (pickingCubit.state.loaded == LoadingStatus.checking)
               ? const CircularProgressIndicator(strokeWidth: 4)
               : SingleChildScrollView(
                   child: Align(

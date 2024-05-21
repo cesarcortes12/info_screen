@@ -23,7 +23,7 @@ class CarManagementCubit extends Cubit<CarManagementState> {
       if (state.allWarehouses.isEmpty) {
         emit(state.copyWith(allWarehouses: warehouses));
       }
-      emit(state.copyWith(loaded: LoadingStatus.success));
+      emit(state.copyWith(loaded: LoadingStatus.initial));
     } catch (e) {
       print('error al obtener las bodegas error: $e');
     }
@@ -74,16 +74,22 @@ class CarManagementCubit extends Cubit<CarManagementState> {
 
       dynamic carsOrderService =
           await carOrderServiceRepositoryimpl.getCarsOrderService(idWorkShop);
-      //print('bodegas ${state.autos}');
-      //if (state.carsOrderService.isEmpty) {
+
       emit(state.copyWith(citas: carsOrderService));
-      //}
+
       print('carsOrderService ${carsOrderService['orders'].length}');
       print('carsOrderService ${carsOrderService['orders'][1].licensePlate}');
       emit(state.copyWith(loaded: LoadingStatus.success));
     } catch (e) {
       print('Error al obtener department en el evento LabelsEvent: $e');
     }
+  }
+
+  resetCubit() {
+    emit(state.copyWith(
+      citas: {'orders': [], 'nextDelivery': []},
+      loaded: LoadingStatus.initial,
+    ));
   }
 }
   //AuthStatus get authStatus => state.authStatus;
