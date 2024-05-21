@@ -290,10 +290,10 @@ class _CardInfo2 extends StatelessWidget {
         child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
           Text('Proximo a Entregar',
               style: TextStyle(
-                  fontSize: 40,
+                  fontSize: 38,
                   fontFamily: 'Poppins',
                   fontWeight: FontWeight.bold)),
-          SizedBox(height: 70),
+          SizedBox(height: 50),
           Stack(children: [
             Container(
               width: size.width > 1035 ? size.width * 1 : size.width * 1,
