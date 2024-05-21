@@ -40,7 +40,9 @@ Color getColorForStatus(String state) {
 }
 
 class InfoScreen extends StatefulWidget {
-  InfoScreen({Key? key}) : super(key: key);
+  final String idWarehouse;
+
+  InfoScreen({Key? key, required this.idWarehouse}) : super(key: key);
 
   @override
   State<InfoScreen> createState() => _InfoScreenState();
@@ -53,7 +55,7 @@ class _InfoScreenState extends State<InfoScreen> {
   void initState() {
     super.initState();
     carManagementCubit = BlocProvider.of<CarManagementCubit>(context);
-    carManagementCubit.getOrderCars(1);
+    carManagementCubit.getOrderCars(int.parse(widget.idWarehouse));
   }
 
   @override
