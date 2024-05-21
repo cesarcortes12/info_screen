@@ -19,56 +19,24 @@ class LoginScreen extends StatelessWidget {
       onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
       child: Scaffold(
         resizeToAvoidBottomInset: true,
-        body: SingleChildScrollView(
-          child: LayoutBuilder(
-            builder: (context, constraints) {
-              if (constraints.maxWidth > 815) {
-                // Pantalla grande, mostrar en una fila
-                return Container(
-                  margin: EdgeInsets.only(top: 150),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Container(
-                        height: 330,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.only(
-                            topLeft: Radius.circular(30),
-                            bottomLeft: Radius.circular(30),
-                          ),
-                          boxShadow: [
-                            BoxShadow(
-                              color: Colors.grey.withOpacity(0.3),
-                              spreadRadius: 5,
-                              blurRadius: 7,
-                              offset:
-                                  Offset(0, 3), // changes position of shadow
-                            ),
-                          ],
-                        ),
-                        margin: EdgeInsets.symmetric(vertical: 30),
-                        child: ClipRRect(
-                          borderRadius: BorderRadius.only(
-                            topLeft: Radius.circular(30),
-                            bottomLeft: Radius.circular(30),
-                          ),
-                          child: const Image(
-                            image: AssetImage('assets/images/taller.jpg'),
-                            width: 500,
-                            height: 500,
-                          ),
-                        ),
-                      ),
-                      //const SizedBox(width: 30),
-                      Container(
-                          width: 500,
-                          padding: EdgeInsets.all(30),
+        body: Center(
+          child: SingleChildScrollView(
+            child: LayoutBuilder(
+              builder: (context, constraints) {
+                if (constraints.maxWidth > 1010) {
+                  // Pantalla grande, mostrar en una fila
+                  return Container(
+                    margin: EdgeInsets.only(top: 50),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Container(
+                          height: 470,
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.only(
-                              topRight: Radius.circular(30),
-                              bottomRight: Radius.circular(30),
+                              topLeft: Radius.circular(30),
+                              bottomLeft: Radius.circular(30),
                             ),
-                            color: Colors.white,
                             boxShadow: [
                               BoxShadow(
                                 color: Colors.grey.withOpacity(0.3),
@@ -79,35 +47,75 @@ class LoginScreen extends StatelessWidget {
                               ),
                             ],
                           ),
-                          child: _LoginForm()),
-                    ],
-                  ),
-                );
-              } else {
-                // Pantalla pequeña, mostrar en una columna
-                return Column(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Container(
-                      margin: EdgeInsets.symmetric(vertical: 30),
-                      child: const Image(
-                        image: AssetImage(
-                            'assets/images/vehiculo_frontal_derecha.jpg'),
-                        width: 170,
-                        height: 170,
+                          margin: EdgeInsets.symmetric(vertical: 30),
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.only(
+                              topLeft: Radius.circular(30),
+                              bottomLeft: Radius.circular(30),
+                            ),
+                            child: const Image(
+                              image: AssetImage('assets/images/taller.jpg'),
+                              width: 500,
+                              height: 500,
+                              fit: BoxFit.cover,
+                            ),
+                          ),
+                        ),
+                        //const SizedBox(width: 30),
+                        Container(
+                            width: 500,
+                            height: 470,
+                            padding: EdgeInsets.all(30),
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.only(
+                                topRight: Radius.circular(30),
+                                bottomRight: Radius.circular(30),
+                              ),
+                              color: Colors.white,
+                              boxShadow: [
+                                BoxShadow(
+                                  color: Colors.grey.withOpacity(0.3),
+                                  spreadRadius: 5,
+                                  blurRadius: 7,
+                                  offset: Offset(
+                                      0, 3), // changes position of shadow
+                                ),
+                              ],
+                            ),
+                            child: _LoginForm()),
+                      ],
+                    ),
+                  );
+                } else {
+                  // Pantalla pequeña, mostrar en una columna
+                  return Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Container(
+                        margin:
+                            EdgeInsets.symmetric(vertical: 20, horizontal: 10),
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.circular(20),
+                          child: const Image(
+                            image: AssetImage('assets/images/taller.jpg'),
+                            width: 500,
+                            height: 200,
+                            fit: BoxFit.cover,
+                          ),
+                        ),
                       ),
-                    ),
-                    Container(
-                      width: double.infinity,
-                      child: Padding(
-                          padding: EdgeInsets.symmetric(horizontal: 50),
-                          child: _LoginForm()),
-                    ),
-                  ],
-                );
-              }
-            },
+                      Container(
+                        width: 550,
+                        child: Padding(
+                            padding: EdgeInsets.symmetric(horizontal: 50),
+                            child: _LoginForm()),
+                      ),
+                    ],
+                  );
+                }
+              },
+            ),
           ),
         ),
       ),
