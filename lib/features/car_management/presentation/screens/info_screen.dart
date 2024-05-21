@@ -312,7 +312,7 @@ class _CardInfo2 extends StatelessWidget {
                 ],
                 image: DecorationImage(
                   image:
-                      AssetImage('assets/images/vehiculo_frontal_derecha.jpg'),
+                      AssetImage('assets/images/vehiculo_frontal_derecha.png'),
                   fit: BoxFit.cover,
                 ),
                 borderRadius: BorderRadius.circular(10),
@@ -484,7 +484,12 @@ class _StateCard extends StatelessWidget {
                     FittedBox(
                       fit: BoxFit.scaleDown,
                       child: Text(
-                        time,
+                        DateTime.parse(time)
+                            .toLocal()
+                            .toString()
+                            .split(' ')[1]
+                            .split('.')[0]
+                            .substring(0, 5),
                         style: TextStyle(
                             color: Colors.black,
                             fontSize: constraints.maxHeight * 0.20,
@@ -551,7 +556,7 @@ class _CardInfo2Small extends StatelessWidget {
                 child: ClipRRect(
                     borderRadius: BorderRadius.circular(10),
                     child: Image.asset(
-                      'assets/images/vehiculo_frontal_derecha.jpg',
+                      'assets/images/vehiculo_frontal_derecha.png',
                       fit: BoxFit.cover,
                       // width: double.infinity,
                       //height: double.infinity,
