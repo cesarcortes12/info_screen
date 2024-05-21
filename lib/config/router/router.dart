@@ -16,7 +16,7 @@ final appRouter = GoRouter(
         return BlocBuilder<AuthCubit, AuthState>(
           builder: (context, authState) {
             if (authState.authStatus == AuthStatus.authenticated) {
-              return const WorkshopListScreen();
+              return InfoScreen();
             } else {
               return const LoginScreen();
             }

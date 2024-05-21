@@ -12,8 +12,8 @@ import 'package:pantalla_informativa/features/car_management/presentation/cubit/
 import 'package:pantalla_informativa/features/car_management/presentation/screens/workshop_list_screen.dart';
 
 Color getColorForStatus(String state) {
-  switch (state.toLowerCase()) {
-    case 'en orden de taller':
+  switch (state) {
+    case 'Orden de taller':
       return Color.fromARGB(255, 161, 170, 221);
 
     case 'en ejecucion':
@@ -25,13 +25,13 @@ Color getColorForStatus(String state) {
     case 'en revision':
       return Color.fromARGB(255, 77, 242, 236);
 
-    case 'facturado':
+    case 'Facturada':
       return Color.fromARGB(255, 243, 255, 5);
 
-    case 'listo para entrega':
+    case 'Terminada':
       return Color.fromARGB(255, 79, 215, 0);
 
-    case 'entregado':
+    case 'Cerrada':
       return Colors.grey;
 
     default:
@@ -76,30 +76,29 @@ class _InfoScreenState extends State<InfoScreen> {
       ),
       body: BlocBuilder<CarManagementCubit, CarManagementState>(
         builder: (context, state) {
+          // print('carsOrderService ${carsOrderService['orders'].length}');
+          //print('carsOrderService ${carsOrderService['orders'][1].licensePlate}');
           return LayoutBuilder(builder: (context, constraints) {
             if (constraints.maxWidth < 1035) {
-              return (carManagementCubit.state.carsOrderService.isEmpty)
-                  ? const CustomEmptyState(
-                      message: 'No hay bodegas para mostrar')
-                  : SingleChildScrollView(
-                      child: Container(
-                        height: constraints.maxHeight,
-                        width: constraints.maxWidth,
-                        child: Column(
-                          children: [
-                            _CardInfo2Small(
-                              carOrderService: carManagementCubit
-                                  .state.carsOrderService.first,
-                            ),
-                            Expanded(
-                                child: _CardInfoSmall(
-                                    carManagementCubit: carManagementCubit)),
-                          ],
-                        ),
+              return SingleChildScrollView(
+                child: Container(
+                  height: constraints.maxHeight,
+                  width: constraints.maxWidth,
+                  child: Column(
+                    children: [
+                      _CardInfo2Small(
+                        carOrderService:
+                            carManagementCubit.state.citas['nextDelivery'],
                       ),
-                    );
+                      Expanded(
+                          child: _CardInfoSmall(
+                              carManagementCubit: carManagementCubit)),
+                    ],
+                  ),
+                ),
+              );
             } else {
-              return (carManagementCubit.state.carsOrderService.isEmpty)
+              return (carManagementCubit.state.citas['orders'].isEmpty)
                   ? const CustomEmptyState(
                       message: 'No hay bodegas para mostrar')
                   : Container(
@@ -117,7 +116,7 @@ class _InfoScreenState extends State<InfoScreen> {
                             flex: 4,
                             child: _CardInfo2(
                               carOrderService: carManagementCubit
-                                  .state.carsOrderService.first,
+                                  .state.citas['nextDelivery'],
                             ),
                           )
                         ],
@@ -153,10 +152,10 @@ class _CardInfo extends StatelessWidget {
         SizedBox(height: 20),
         Expanded(
             child: ListView.builder(
-                itemCount: carManagementCubit.state.carsOrderService.length,
+                itemCount: carManagementCubit.state.citas['orders'].length,
                 itemBuilder: (context, index) {
                   CarOrderService info =
-                      carManagementCubit.state.carsOrderService[index];
+                      carManagementCubit.state.citas['orders'][index];
                   return Container(
                     margin: EdgeInsets.symmetric(vertical: 10),
                     width: size.width * 0.4,
@@ -259,8 +258,8 @@ class _CardInfo extends StatelessWidget {
                               borderRadius: BorderRadius.circular(10),
                             ),
                             child: _StateCard(
-                              status: info.status.toString(),
-                              time: info.deliveryTime.toString(),
+                              status: info.status,
+                              time: info.deliveryTime,
                             ),
                           ),
                         )
@@ -274,7 +273,7 @@ class _CardInfo extends StatelessWidget {
 }
 
 class _CardInfo2 extends StatelessWidget {
-  final CarOrderService carOrderService;
+  final dynamic carOrderService;
 
   const _CardInfo2({
     required this.carOrderService,
@@ -688,10 +687,10 @@ class _CardInfoSmall extends StatelessWidget {
         SizedBox(height: 05),
         Expanded(
           child: ListView.builder(
-            itemCount: carManagementCubit.state.carsOrderService.length,
+            itemCount: carManagementCubit.state.citas['orders'].length,
             itemBuilder: (context, index) {
               CarOrderService info =
-                  carManagementCubit.state.carsOrderService[index];
+                  carManagementCubit.state.citas['orders'][index];
               return LayoutBuilder(
                 builder: (context, constraints) {
                   return Container(
@@ -817,8 +816,8 @@ class _CardInfoSmall extends StatelessWidget {
                             ),
                             child: Expanded(
                               child: _StateCard(
-                                status: info.status.toString(),
-                                time: info.deliveryTime.toString(),
+                                status: info.status,
+                                time: info.deliveryTime,
                               ),
                             ),
                           ),

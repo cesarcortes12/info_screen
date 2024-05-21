@@ -5,9 +5,9 @@ class CarOrderServiceMapper {
       CarOrderService(
         id: json['id'] ?? 0,
         licensePlate: json['placa'] ?? 'sin placa',
-        name: json['nombre'] ?? 'sin nombre',
-        assignedTo: json['asignado_a'] ?? 'sin mecanico',
-        deliveryTime: json['hora_entrega'] ?? DateTime.now(),
+        name: json['cliente'] ?? 'sin nombre',
+        assignedTo: json['vendedor'] ?? 'sin mecanico',
+        deliveryTime: json['fechaEstimada'] ?? '',
         status: json['estado'] ?? 'sin estado',
         modelo: json['modelo'] ?? 'sin modelo',
       );

@@ -19,14 +19,37 @@ class CarOrderServiceDatasourceimpl extends CarManagementDatasource {
   final keyValueStorageService = KeyValueStorageServiceImpl();
 
   @override
-  Future<List<CarOrderService>> getCarsOrderService(int idWorkShop) async {
-    final wareHousesMapper =
-        await ResponseBackMapper.responseBackJsonToEntity<CarOrderService>(
-            res, (json) => CarOrderServiceMapper.carOrderServiceToEntity(json));
+  Future<dynamic> getCarsOrderService(int idWorkShop) async {
+    try {
+      final tokenObject =
+          await keyValueStorageService.getValue<String>('token');
 
-    final List<CarOrderService> wareHouses = wareHousesMapper.data.toList();
+      final Map<String, dynamic> tokenMap = jsonDecode(tokenObject!);
 
-    return wareHouses;
+      String token = tokenMap['token'];
+
+      final response = await client.get(
+        Uri.parse('${Environment.apiUrl}/CitasTaller/1'),
+        headers: {
+          'Authorization': 'Bearer ${token}',
+          'Content-Type': 'application/json',
+        },
+      );
+      if (response.statusCode == 200) {
+        Map<String, dynamic> jsonResponse = await jsonDecode(response.body);
+
+        final wareHousesMapper =
+            await ResponseBackMapper.responseBackJsonToEntity<CarOrderService>(
+                jsonResponse,
+                (json) => CarOrderServiceMapper.carOrderServiceToEntity(json));
+
+        final dynamic wareHouses = wareHousesMapper.data;
+
+        return wareHouses;
+      }
+    } catch (e) {
+      throw Exception('error $e');
+    }
   }
 
   @override

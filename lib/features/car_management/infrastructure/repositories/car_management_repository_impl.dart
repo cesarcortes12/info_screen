@@ -10,7 +10,7 @@ class CarOrderServiceRepositoryimpl extends CarManagementRepository {
             carOrderdatasource ?? CarOrderServiceDatasourceimpl();
 
   @override
-  Future<List<CarOrderService>> getCarsOrderService(int idWarehouse) {
+  Future<dynamic> getCarsOrderService(int idWarehouse) {
     return carOrderdatasource.getCarsOrderService(idWarehouse);
   }
 

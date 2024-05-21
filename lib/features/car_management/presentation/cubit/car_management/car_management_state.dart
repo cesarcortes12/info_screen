@@ -4,22 +4,25 @@ enum LoadingStatus { initial, checking, success }
 
 class CarManagementState /*extends Equatable*/ {
   final List<Warehouse> allWarehouses;
-  final List<CarOrderService> carsOrderService;
+  final dynamic carsOrderService;
+  final Map<String, dynamic> citas;
   final LoadingStatus? loaded;
 
-  CarManagementState( {
+  CarManagementState({
+    this.citas = const {'orders': [], 'nextDelivery': []},
     this.allWarehouses = const [],
-    this.carsOrderService = const [],
+    this.carsOrderService,
     this.loaded = LoadingStatus.initial,
-    
   });
 
   CarManagementState copyWith({
+    Map<String, dynamic>? citas,
     List<Warehouse>? allWarehouses,
-    List<CarOrderService>? carsOrderService,
+    dynamic carsOrderService,
     LoadingStatus? loaded,
   }) =>
       CarManagementState(
+        citas: citas ?? this.citas,
         allWarehouses: allWarehouses ?? this.allWarehouses,
         carsOrderService: carsOrderService ?? this.carsOrderService,
         loaded: loaded ?? this.loaded,
