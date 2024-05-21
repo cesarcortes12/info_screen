@@ -66,6 +66,7 @@ class _InfoScreenState extends State<InfoScreen> {
           icon: Icon(Icons.arrow_back),
           onPressed: () {
             GoRouter.of(context).pop();
+            carManagementCubit.resetCubit();
           },
         ),
         title: Center(
