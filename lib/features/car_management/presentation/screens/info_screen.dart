@@ -6,6 +6,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:pantalla_informativa/features/car_management/domain/domain.dart';
 import 'package:pantalla_informativa/features/car_management/presentation/cubit/car_management/car_management_cubit.dart';
+import 'package:pantalla_informativa/features/car_management/presentation/cubit/cubit.dart';
 import 'package:pantalla_informativa/features/car_management/presentation/screens/workshop_list_screen.dart';
 
 Color getColorForStatus(String state) {
@@ -49,12 +50,14 @@ class InfoScreen extends StatefulWidget {
 class _InfoScreenState extends State<InfoScreen> {
   Timer? _timer;
   late CarManagementCubit carManagementCubit;
+  late AuthCubit authCubit;
 
   void initState() {
     super.initState();
     carManagementCubit = BlocProvider.of<CarManagementCubit>(context);
     carManagementCubit.getOrderCars(int.parse(widget.idWarehouse));
     _startPeriodicRefresh(int.parse(widget.idWarehouse));
+    authCubit = BlocProvider.of<AuthCubit>(context);
   }
 
   @override
@@ -74,6 +77,15 @@ class _InfoScreenState extends State<InfoScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        actions: [
+          IconButton(
+            icon: Icon(Icons.logout),
+            onPressed: () {
+              GoRouter.of(context).push('/');
+              authCubit.logout();
+            },
+          ),
+        ],
         leading: IconButton(
           icon: Icon(Icons.arrow_back),
           onPressed: () {
