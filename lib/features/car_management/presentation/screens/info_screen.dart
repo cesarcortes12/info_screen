@@ -344,7 +344,7 @@ class _CardInfo2 extends StatelessWidget {
           Stack(children: [
             Container(
               width: size.width > 1035 ? size.width * 1 : size.width * 1,
-              height: size.height * 0.65,
+              height: size.height * 0.60,
               decoration: BoxDecoration(
                 boxShadow: [
                   BoxShadow(
@@ -364,7 +364,7 @@ class _CardInfo2 extends StatelessWidget {
             ),
             Positioned(
               left: size.width * 0.045,
-              top: size.height * 0.20,
+              top: size.height * 0.15,
               child: Container(
                 width: size.width * 0.28,
                 height: size.width * 0.18,
@@ -428,24 +428,22 @@ class _CardInfo2 extends StatelessWidget {
                             ),
                             Container(
                               margin: EdgeInsets.symmetric(horizontal: 10),
-                              child: Expanded(
-                                child: Text(
-                                  textAlign: TextAlign.center,
-                                  '${carOrderService.name}',
-                                  maxLines: 2,
-                                  overflow: TextOverflow.ellipsis,
-                                  style: TextStyle(
-                                    fontSize: constraints.maxWidth * 0.08,
-                                    fontWeight: FontWeight.w400,
-                                    color: Color.fromARGB(255, 255, 255, 255),
-                                    shadows: [
-                                      Shadow(
-                                        offset: Offset(2.0, 2.0),
-                                        blurRadius: 4.0,
-                                        color: Color.fromARGB(128, 0, 0, 0),
-                                      ),
-                                    ],
-                                  ),
+                              child: Text(
+                                textAlign: TextAlign.center,
+                                '${carOrderService.name}',
+                                maxLines: 2,
+                                overflow: TextOverflow.ellipsis,
+                                style: TextStyle(
+                                  fontSize: constraints.maxWidth * 0.08,
+                                  fontWeight: FontWeight.w400,
+                                  color: Color.fromARGB(255, 255, 255, 255),
+                                  shadows: [
+                                    Shadow(
+                                      offset: Offset(2.0, 2.0),
+                                      blurRadius: 4.0,
+                                      color: Color.fromARGB(128, 0, 0, 0),
+                                    ),
+                                  ],
                                 ),
                               ),
                             ),
