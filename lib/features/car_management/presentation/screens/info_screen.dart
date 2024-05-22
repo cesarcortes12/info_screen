@@ -13,7 +13,7 @@ Color getColorForStatus(String state) {
     case 'Orden de taller':
       return Color.fromARGB(255, 161, 170, 221);
 
-    case 'en ejecucion':
+    case 'Proceso':
       return Color.fromARGB(205, 253, 186, 0);
 
     case 'pausado':
@@ -344,7 +344,7 @@ class _CardInfo2 extends StatelessWidget {
           Stack(children: [
             Container(
               width: size.width > 1035 ? size.width * 1 : size.width * 1,
-              height: size.height * 0.65,
+              height: size.height * 0.60,
               decoration: BoxDecoration(
                 boxShadow: [
                   BoxShadow(
@@ -364,7 +364,7 @@ class _CardInfo2 extends StatelessWidget {
             ),
             Positioned(
               left: size.width * 0.045,
-              top: size.height * 0.20,
+              top: size.height * 0.18,
               child: Container(
                 width: size.width * 0.28,
                 height: size.width * 0.18,

@@ -112,33 +112,31 @@ class _WarehouseCardState extends State<WarehouseCard> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Center(
-                    child: Flexible(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            widget.warehouse.name,
-                            style: TextStyle(
-                              //color: Colors.white,
-                              fontSize: 22,
-                              fontWeight: FontWeight.bold,
-                            ),
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          widget.warehouse.name,
+                          style: TextStyle(
+                            //color: Colors.white,
+                            fontSize: 22,
+                            fontWeight: FontWeight.bold,
                           ),
-                          Text(' ${widget.warehouse.name}',
-                              style: TextStyle(
-                                  //color: Colors.white
-                                  )),
-                          Text(' ${widget.warehouse.city}',
-                              style: TextStyle(
-                                  //color: Colors.white
-                                  )),
-                          Text(' ${widget.warehouse.phone}',
-                              style: TextStyle(
-                                  //color: Colors.white
-                                  )),
-                        ],
-                      ),
+                        ),
+                        Text(' ${widget.warehouse.name}',
+                            style: TextStyle(
+                                //color: Colors.white
+                                )),
+                        Text(' ${widget.warehouse.city}',
+                            style: TextStyle(
+                                //color: Colors.white
+                                )),
+                        Text(' ${widget.warehouse.phone}',
+                            style: TextStyle(
+                                //color: Colors.white
+                                )),
+                      ],
                     ),
                   ),
                   Padding(
