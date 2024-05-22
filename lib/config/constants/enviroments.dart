@@ -3,9 +3,9 @@ import 'package:flutter/foundation.dart' show kIsWeb;
 
 class Environment {
   static String apiUrl = kIsWeb
-      ? 'http://192.168.6.66:8081/api'
+      ? 'http://dmspruebas01.eastus2.cloudapp.azure.com:8084/api'
       : Platform.isAndroid
-          ? 'http://192.168.6.66:8081/api'
+          ? 'http://dmspruebas01.eastus2.cloudapp.azure.com:8084/api'
           : 'http://localhost:7161';
   static String socketUrl = kIsWeb
       ? 'http://158.69.125.70:8080'
