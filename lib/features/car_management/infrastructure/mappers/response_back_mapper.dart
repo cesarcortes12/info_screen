@@ -1,5 +1,4 @@
-import 'package:pantalla_informativa/features/car_management/domain/domain.dart';
-import 'package:pantalla_informativa/features/car_management/infrastructure/mappers/car_order_service_mapper.dart';
+import 'package:pantalla_informativa/features/car_management/infrastructure/infrastructure.dart';
 
 class ResponseBack<T> {
   final bool isSuccess;

@@ -14,18 +14,16 @@ class WorkshopListScreen extends StatefulWidget {
 }
 
 class _WorkshopListScreenState extends State<WorkshopListScreen> {
-  late CarManagementCubit pickingCubit;
+  late CarManagementCubit carManagementCubit;
 
   void initState() {
     super.initState();
-    pickingCubit = BlocProvider.of<CarManagementCubit>(context);
-    pickingCubit.getWarehouses(false);
+    carManagementCubit = BlocProvider.of<CarManagementCubit>(context);
+    carManagementCubit.getWarehouses(false);
   }
 
   @override
   Widget build(BuildContext context) {
-    //final pickingCubit_ = context.watch<PickingCubit>();
-
     return Scaffold(
       appBar: AppBar(
         title: Center(
@@ -34,12 +32,10 @@ class _WorkshopListScreenState extends State<WorkshopListScreen> {
             style: TextStyle(color: Colors.white),
           ),
         ),
-
-        //backgroundColor: Color.fromARGB(255, 4, 67, 160),
       ),
       body: BlocBuilder<CarManagementCubit, CarManagementState>(
         builder: (context, state) {
-          return (pickingCubit.state.loaded == LoadingStatus.checking)
+          return (carManagementCubit.state.loaded == LoadingStatus.checking)
               ? const CircularProgressIndicator(strokeWidth: 4)
               : SingleChildScrollView(
                   child: Align(
@@ -48,7 +44,7 @@ class _WorkshopListScreenState extends State<WorkshopListScreen> {
                         width: 800,
                         margin: const EdgeInsets.symmetric(
                             horizontal: 10, vertical: 10),
-                        child: (pickingCubit.state.allWarehouses.isEmpty)
+                        child: (carManagementCubit.state.allWarehouses.isEmpty)
                             ? const CustomEmptyState(
                                 message: 'No hay bodegas para mostrar')
                             : ListView.builder(
@@ -58,7 +54,6 @@ class _WorkshopListScreenState extends State<WorkshopListScreen> {
                                 itemBuilder: (BuildContext context, int index) {
                                   Warehouse wareHouse =
                                       state.allWarehouses[index];
-                                  //print('wareHause ${wareHause}');
                                   return WarehouseCard(warehouse: wareHouse);
                                 },
                               )),
@@ -83,41 +78,34 @@ class WarehouseCard extends StatefulWidget {
 }
 
 class _WarehouseCardState extends State<WarehouseCard> {
-  //late PickingCubit pickingCubit;
+  late CarManagementCubit carManagementCubit;
   @override
   void initState() {
     print('ENTRA en card initstate');
-    //pickingCubit = BlocProvider.of<PickingCubit>(context);
-
+    carManagementCubit = BlocProvider.of<CarManagementCubit>(context);
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    final size = MediaQuery.of(context).size;
-
     return LayoutBuilder(builder: (context, constraints) {
       return constraints.maxWidth > 770
           ? Container(
               margin: EdgeInsets.all(8),
               padding: EdgeInsets.all(12),
-              //width: size.width * 0.4,
-              //height: 150,
-              //width: 80,
               decoration: BoxDecoration(
-                //color: Color(0xFF0443A0),
                 borderRadius: BorderRadius.circular(7),
                 color: Colors.white,
                 border: Border.all(
                   color: Color.fromARGB(255, 216, 216, 216),
-                  width: 1.0, // Ajusta el ancho del borde aquí
+                  width: 1.0,
                 ),
                 boxShadow: [
                   BoxShadow(
                     color: Colors.grey.withOpacity(0.1),
                     spreadRadius: 5,
                     blurRadius: 7,
-                    offset: Offset(0, 3), // changes position of shadow
+                    offset: Offset(0, 3),
                   ),
                 ],
               ),
@@ -125,36 +113,31 @@ class _WarehouseCardState extends State<WarehouseCard> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Center(
-                    child: Container(
-                      //width: 600,
-                      //height: 100,
-                      //padding: EdgeInsets.only(left: 20.0),
-                      child: Flexible(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              widget.warehouse.name,
-                              style: TextStyle(
-                                //color: Colors.white,
-                                fontSize: 22,
-                                fontWeight: FontWeight.bold,
-                              ),
+                    child: Flexible(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            widget.warehouse.name,
+                            style: TextStyle(
+                              //color: Colors.white,
+                              fontSize: 22,
+                              fontWeight: FontWeight.bold,
                             ),
-                            Text(' ${widget.warehouse.name}',
-                                style: TextStyle(
-                                    //color: Colors.white
-                                    )),
-                            Text(' ${widget.warehouse.city}',
-                                style: TextStyle(
-                                    //color: Colors.white
-                                    )),
-                            Text(' ${widget.warehouse.phone}',
-                                style: TextStyle(
-                                    //color: Colors.white
-                                    )),
-                          ],
-                        ),
+                          ),
+                          Text(' ${widget.warehouse.name}',
+                              style: TextStyle(
+                                  //color: Colors.white
+                                  )),
+                          Text(' ${widget.warehouse.city}',
+                              style: TextStyle(
+                                  //color: Colors.white
+                                  )),
+                          Text(' ${widget.warehouse.phone}',
+                              style: TextStyle(
+                                  //color: Colors.white
+                                  )),
+                        ],
                       ),
                     ),
                   ),
@@ -163,6 +146,8 @@ class _WarehouseCardState extends State<WarehouseCard> {
                     child: CustomFilledButton(
                       text: Text('Ingresar'),
                       onPressed: () async {
+                        await carManagementCubit
+                            .saveWarehouse(widget.warehouse);
                         GoRouter.of(context)
                             .push('/info/${widget.warehouse.id}');
                       },
@@ -174,23 +159,19 @@ class _WarehouseCardState extends State<WarehouseCard> {
           : Container(
               margin: EdgeInsets.all(8),
               padding: EdgeInsets.all(8.0),
-              //width: size.width * 0.4,
-              //height: 200,
-              //width: 70,
               decoration: BoxDecoration(
-                //color: Color(0xFF0443A0),
                 borderRadius: BorderRadius.circular(7),
                 color: Colors.white,
                 border: Border.all(
                   color: Color.fromARGB(255, 216, 216, 216),
-                  width: 1.0, // Ajusta el ancho del borde aquí
+                  width: 1.0,
                 ),
                 boxShadow: [
                   BoxShadow(
                     color: Colors.grey.withOpacity(0.1),
                     spreadRadius: 5,
                     blurRadius: 7,
-                    offset: Offset(0, 3), // changes position of shadow
+                    offset: Offset(0, 3),
                   ),
                 ],
               ),
@@ -200,26 +181,22 @@ class _WarehouseCardState extends State<WarehouseCard> {
                   Text(
                     widget.warehouse.name,
                     style: TextStyle(
-                      //color: Colors.white,
                       fontSize: 20,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
                   const SizedBox(height: 5),
-                  Text(' ${widget.warehouse.address}',
-                      style: TextStyle(
-                          //color: Colors.white
-                          )),
+                  Text(
+                    ' ${widget.warehouse.address}',
+                  ),
                   const SizedBox(height: 5),
-                  Text(' ${widget.warehouse.city}',
-                      style: TextStyle(
-                          //color: Colors.white
-                          )),
+                  Text(
+                    ' ${widget.warehouse.city}',
+                  ),
                   const SizedBox(height: 5),
-                  Text(' ${widget.warehouse.phone}',
-                      style: TextStyle(
-                          //color: Colors.white
-                          )),
+                  Text(
+                    ' ${widget.warehouse.phone}',
+                  ),
                 ],
               ),
             );
