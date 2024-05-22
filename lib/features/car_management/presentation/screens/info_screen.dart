@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
@@ -46,12 +47,27 @@ class InfoScreen extends StatefulWidget {
 
 @override
 class _InfoScreenState extends State<InfoScreen> {
+  Timer? _timer;
   late CarManagementCubit carManagementCubit;
 
   void initState() {
     super.initState();
     carManagementCubit = BlocProvider.of<CarManagementCubit>(context);
     carManagementCubit.getOrderCars(int.parse(widget.idWarehouse));
+    _startPeriodicRefresh(int.parse(widget.idWarehouse));
+  }
+
+  @override
+  void dispose() {
+    _timer?.cancel();
+    super.dispose();
+  }
+
+  void _startPeriodicRefresh(int idWarehouse) {
+    _timer = Timer.periodic(const Duration(seconds: 60), (timer) {
+      carManagementCubit.getOrderCars(idWarehouse);
+      print('actualizando al minuto  segundois');
+    });
   }
 
   @override
@@ -339,7 +355,7 @@ class _CardInfo2 extends StatelessWidget {
                 ],
                 image: DecorationImage(
                   image:
-                      AssetImage('assets/images/vehiculo_frontal_derecha.jpg'),
+                      AssetImage('assets/images/vehiculo_frontal_derecha.png'),
                   fit: BoxFit.cover,
                 ),
                 borderRadius: BorderRadius.circular(10),
@@ -511,7 +527,12 @@ class _StateCard extends StatelessWidget {
                     FittedBox(
                       fit: BoxFit.scaleDown,
                       child: Text(
-                        time,
+                        DateTime.parse(time)
+                            .toLocal()
+                            .toString()
+                            .split(' ')[1]
+                            .split('.')[0]
+                            .substring(0, 5),
                         style: TextStyle(
                             color: Colors.black,
                             fontSize: constraints.maxHeight * 0.20,
@@ -576,7 +597,7 @@ class _CardInfo2Small extends StatelessWidget {
                 child: ClipRRect(
                     borderRadius: BorderRadius.circular(10),
                     child: Image.asset(
-                      'assets/images/vehiculo_frontal_derecha.jpg',
+                      'assets/images/vehiculo_frontal_derecha.png',
                       fit: BoxFit.cover,
                     )),
               ),

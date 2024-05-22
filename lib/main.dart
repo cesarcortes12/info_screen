@@ -39,7 +39,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return PopScope(
       child: MaterialApp.router(
-        title: 'Info Screen',
+        title: 'Talleres',
         routerConfig: appRouter,
         debugShowCheckedModeBanner: false,
         theme: AppTheme().getTheme(),
