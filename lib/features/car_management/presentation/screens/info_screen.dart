@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:ui';
 
 import 'package:flutter/cupertino.dart';
@@ -50,12 +51,27 @@ class InfoScreen extends StatefulWidget {
 
 @override
 class _InfoScreenState extends State<InfoScreen> {
+  Timer? _timer;
   late CarManagementCubit carManagementCubit;
 
   void initState() {
     super.initState();
     carManagementCubit = BlocProvider.of<CarManagementCubit>(context);
     carManagementCubit.getOrderCars(int.parse(widget.idWarehouse));
+    _startPeriodicRefresh(int.parse(widget.idWarehouse));
+  }
+
+  @override
+  void dispose() {
+    _timer?.cancel();
+    super.dispose();
+  }
+
+  void _startPeriodicRefresh(int idWarehouse) {
+    _timer = Timer.periodic(const Duration(seconds: 60), (timer) {
+      carManagementCubit.getOrderCars(idWarehouse);
+      print('actualizando al minuto  segundois');
+    });
   }
 
   @override
@@ -147,7 +163,7 @@ class _CardInfo extends StatelessWidget {
       padding: EdgeInsets.all(30),
       width: size.width * 0.4,
       child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-        Text('Su Vehiculo',
+        Text('Vehiculo A Entregar',
             style: TextStyle(
                 fontSize: 40,
                 fontFamily: 'Poppins',
@@ -282,6 +298,14 @@ class _CardInfo2 extends StatelessWidget {
     required this.carOrderService,
     super.key,
   });
+
+  Stream<DateTime> getTimeStream() async* {
+    while (true) {
+      await Future.delayed(const Duration(seconds: 1));
+      yield DateTime.now();
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
@@ -291,12 +315,42 @@ class _CardInfo2 extends StatelessWidget {
         width: size.width > 1035 ? size.width * 0.6 : size.width,
         height: size.height * 1.0,
         child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-          Text('Proximo a Entregar',
-              style: TextStyle(
-                  fontSize: 38,
-                  fontFamily: 'Poppins',
-                  fontWeight: FontWeight.bold)),
-          SizedBox(height: 50),
+          FittedBox(
+            fit: BoxFit.scaleDown,
+            child: Text('Proximo Vehiculo A Entregar',
+                style: TextStyle(
+                    fontSize: 40,
+                    fontFamily: 'Poppins',
+                    fontWeight: FontWeight.bold)),
+          ),
+          SizedBox(height: 40),
+          StreamBuilder<DateTime>(
+            stream: getTimeStream(),
+            builder: (context, snapshot) {
+              if (snapshot.connectionState == ConnectionState.waiting) {
+                return Text('Esperando por la hora...',
+                    style: TextStyle(fontSize: 24));
+              } else if (snapshot.hasError) {
+                return Text('Error: ${snapshot.error}',
+                    style: TextStyle(fontSize: 24));
+              } else if (snapshot.hasData) {
+                DateTime now = snapshot.data!;
+                return FittedBox(
+                  fit: BoxFit.scaleDown,
+                  child: Text(
+                    'Hora actual: ${now.hour}:${now.minute}:${now.second}',
+                    style: TextStyle(
+                        fontSize: 30,
+                        fontFamily: 'Poppins',
+                        fontWeight: FontWeight.bold),
+                  ),
+                );
+              } else {
+                return Text('No hay datos disponibles',
+                    style: TextStyle(fontSize: 24));
+              }
+            },
+          ),
           Stack(children: [
             Container(
               width: size.width > 1035 ? size.width * 1 : size.width * 1,
