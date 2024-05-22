@@ -1,9 +1,8 @@
 import 'dart:convert';
 
 import 'package:bloc/bloc.dart';
-import 'package:pantalla_informativa/features/car_management/domain/entities/user.dart';
-import 'package:pantalla_informativa/features/car_management/domain/repositories/car_management_repository.dart';
-import 'package:pantalla_informativa/features/shared/services/key_value_storage_service.dart';
+import 'package:pantalla_informativa/features/car_management/domain/domain.dart';
+import 'package:pantalla_informativa/features/shared/shared.dart';
 
 part 'auth_state.dart';
 
@@ -25,7 +24,7 @@ class AuthCubit extends Cubit<AuthState> {
     await Future.delayed(const Duration(milliseconds: 500));
 
     try {
-      final User? user =
+      final User user =
           await carManagementRepository.login(bussines, username, password);
 
       _setLoggedUser(user);

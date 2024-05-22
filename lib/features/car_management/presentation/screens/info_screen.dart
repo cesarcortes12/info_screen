@@ -1,10 +1,6 @@
 import 'dart:ui';
 
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/painting.dart';
-import 'package:flutter/rendering.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:pantalla_informativa/features/car_management/domain/domain.dart';
@@ -71,7 +67,7 @@ class _InfoScreenState extends State<InfoScreen> {
         ),
         title: Center(
           child: Text(
-            'INFORMACIÓN',
+            carManagementCubit.state.warehouse!.name,
             style: TextStyle(color: Colors.white),
           ),
         ),
@@ -79,8 +75,6 @@ class _InfoScreenState extends State<InfoScreen> {
       ),
       body: BlocBuilder<CarManagementCubit, CarManagementState>(
         builder: (context, state) {
-          // print('carsOrderService ${carsOrderService['orders'].length}');
-          //print('carsOrderService ${carsOrderService['orders'][1].licensePlate}');
           return LayoutBuilder(builder: (context, constraints) {
             if (constraints.maxWidth < 1035) {
               return SingleChildScrollView(
@@ -238,11 +232,6 @@ class _CardInfo extends StatelessWidget {
                                                     'Asignado a: ${info.assignedTo}',
                                                     style: TextStyle(
                                                         color: Colors.white)),
-                                                // SizedBox(height: 6),
-                                                // Text(
-                                                //     'Hora Entrega: ${info['hora_entrega']}',
-                                                //     style: TextStyle(
-                                                //         color: Colors.white)),
                                               ])),
                                     ],
                                   ),
@@ -573,8 +562,6 @@ class _CardInfo2Small extends StatelessWidget {
             AspectRatio(
               aspectRatio: 3 / 1,
               child: Container(
-                //width: size.width * 1,
-                //height: size.height * 0.3,
                 decoration: BoxDecoration(
                   boxShadow: [
                     BoxShadow(
@@ -591,8 +578,6 @@ class _CardInfo2Small extends StatelessWidget {
                     child: Image.asset(
                       'assets/images/vehiculo_frontal_derecha.jpg',
                       fit: BoxFit.cover,
-                      // width: double.infinity,
-                      //height: double.infinity,
                     )),
               ),
             ),

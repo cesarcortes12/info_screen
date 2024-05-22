@@ -1,20 +1,16 @@
 import 'package:flutter/material.dart';
-import 'dart:math' show pi;
 
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pantalla_informativa/features/car_management/presentation/cubit/auth_cubit/auth_cubit.dart';
 import 'package:pantalla_informativa/features/car_management/presentation/cubit/login_form_cubit/login_form_cubit.dart';
 import 'package:pantalla_informativa/features/widgets/custom_filled_button.dart';
 import 'package:pantalla_informativa/features/widgets/cutom_text_form_field.dart';
-//import 'package:flutter_svg/svg.dart';
 
 class LoginScreen extends StatelessWidget {
   const LoginScreen({Key? key});
 
   @override
   Widget build(BuildContext context) {
-    final size = MediaQuery.of(context).size;
-
     return GestureDetector(
       onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
       child: Scaffold(
@@ -23,7 +19,6 @@ class LoginScreen extends StatelessWidget {
           child: LayoutBuilder(
             builder: (context, constraints) {
               if (constraints.maxWidth > 815) {
-                // Pantalla grande, mostrar en una fila
                 return Container(
                   margin: EdgeInsets.only(top: 150),
                   child: Row(
@@ -41,8 +36,7 @@ class LoginScreen extends StatelessWidget {
                               color: Colors.grey.withOpacity(0.3),
                               spreadRadius: 5,
                               blurRadius: 7,
-                              offset:
-                                  Offset(0, 3), // changes position of shadow
+                              offset: Offset(0, 3),
                             ),
                           ],
                         ),
@@ -59,7 +53,6 @@ class LoginScreen extends StatelessWidget {
                           ),
                         ),
                       ),
-                      //const SizedBox(width: 30),
                       Container(
                           width: 500,
                           padding: EdgeInsets.all(30),
@@ -74,8 +67,7 @@ class LoginScreen extends StatelessWidget {
                                 color: Colors.grey.withOpacity(0.3),
                                 spreadRadius: 5,
                                 blurRadius: 7,
-                                offset:
-                                    Offset(0, 3), // changes position of shadow
+                                offset: Offset(0, 3),
                               ),
                             ],
                           ),
@@ -84,13 +76,12 @@ class LoginScreen extends StatelessWidget {
                   ),
                 );
               } else {
-                // Pantalla pequeña, mostrar en una columna
                 return Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Container(
-                      margin: EdgeInsets.symmetric(vertical: 30),
+                      margin: const EdgeInsets.symmetric(vertical: 30),
                       child: const Image(
                         image: AssetImage(
                             'assets/images/vehiculo_frontal_derecha.jpg'),
@@ -190,8 +181,6 @@ class _LoginForm extends StatelessWidget {
               );
             },
           ),
-          // const Spacer(flex: 1),
-          // const Spacer(flex: 1),
         ],
       );
     }));

@@ -1,5 +1,4 @@
 import 'package:pantalla_informativa/features/car_management/domain/domain.dart';
-import 'package:pantalla_informativa/features/car_management/domain/entities/warehouse.dart';
 import 'package:pantalla_informativa/features/car_management/infrastructure/infrastructure.dart';
 
 class CarOrderServiceRepositoryimpl extends CarManagementRepository {

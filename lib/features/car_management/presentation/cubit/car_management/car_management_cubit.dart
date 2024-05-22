@@ -1,7 +1,6 @@
 import 'package:bloc/bloc.dart';
-import 'package:pantalla_informativa/features/car_management/domain/entities/warehouse.dart';
-import 'package:pantalla_informativa/features/car_management/domain/entities/car_order_service.dart';
-import 'package:pantalla_informativa/features/car_management/infrastructure/repositories/car_management_repository_impl.dart';
+import 'package:pantalla_informativa/features/car_management/domain/domain.dart';
+import 'package:pantalla_informativa/features/car_management/infrastructure/infrastructure.dart';
 
 part 'car_management_state.dart';
 
@@ -28,45 +27,6 @@ class CarManagementCubit extends Cubit<CarManagementState> {
       print('error al obtener las bodegas error: $e');
     }
   }
-  // List<Auto> autos = [
-  //   Auto(
-  //       name: 'Taller 1',
-  //       city: 'Cali',
-  //       address: 'Cr56 # 56-56',
-  //       phone: '312678809'),
-  //   Auto(
-  //     name: 'Taller 2',
-  //     city: 'Medellín',
-  //     address: 'Cr56 # 56-56',
-  //     phone: '312678809',
-  //   ),
-  //   Auto(
-  //     name: 'Taller 3',
-  //     city: 'Bogota',
-  //     address: 'Cr56 # 56-56',
-  //     phone: '312678809',
-  //   ),
-  //   Auto(
-  //     name: 'Taller 3',
-  //     city: 'Bogota',
-  //     address: 'Cr56 # 56-56',
-  //     phone: '312678809',
-  //   ),
-  //   Auto(
-  //     name: 'Taller 3',
-  //     city: 'Bogota',
-  //     address: 'Cr56 # 56-56',
-  //     phone: '312678809',
-  //   ),
-  //   Auto(
-  //     name: 'Taller 3',
-  //     city: 'Bogota',
-  //     address: 'Cr56 # 56-56',
-  //     phone: '312678809',
-  //   ),
-  //   // Agrega más talleres según sea necesario
-  // ];
-  //print('bodegas ${state.autos}');
 
   Future<void> getOrderCars(int idWorkShop) async {
     try {
@@ -76,19 +36,21 @@ class CarManagementCubit extends Cubit<CarManagementState> {
           await carOrderServiceRepositoryimpl.getCarsOrderService(idWorkShop);
 
       emit(state.copyWith(citas: carsOrderService));
-
-      print('carsOrderService ${carsOrderService['orders'].length}');
-      print('carsOrderService ${carsOrderService['orders'][1].licensePlate}');
       emit(state.copyWith(loaded: LoadingStatus.success));
     } catch (e) {
       print('Error al obtener department en el evento LabelsEvent: $e');
     }
   }
 
+  saveWarehouse(Warehouse warehouse) {
+    emit(state.copyWith(warehouse: warehouse));
+  }
+
   resetCubit() {
     emit(state.copyWith(
       citas: {'orders': [], 'nextDelivery': []},
       loaded: LoadingStatus.initial,
+      warehouse: null,
     ));
   }
 }
