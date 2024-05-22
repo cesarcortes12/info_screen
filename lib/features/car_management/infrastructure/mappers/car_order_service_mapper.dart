@@ -10,5 +10,7 @@ class CarOrderServiceMapper {
         deliveryTime: json['fechaEstimada'] ?? '',
         status: json['estado'] ?? 'sin estado',
         modelo: json['modelo'] ?? 'sin modelo',
+        brand: json['marca'] ?? 'sin marca',
+        line: json['linea'] ?? 'sin servicio',
       );
 }

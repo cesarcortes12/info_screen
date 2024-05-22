@@ -218,7 +218,8 @@ class _CardInfo extends StatelessWidget {
                                         CrossAxisAlignment.start,
                                     children: [
                                       ListTile(
-                                          title: Text(info.modelo.toUpperCase(),
+                                          title: Text(
+                                              '${info.brand.toUpperCase()} ${info.line.toUpperCase()}',
                                               textAlign: TextAlign.center,
                                               style: TextStyle(
                                                   color: Colors.white,

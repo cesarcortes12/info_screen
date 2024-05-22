@@ -6,6 +6,8 @@ class CarOrderService {
   final String deliveryTime;
   final String status;
   final String modelo;
+  final String line;
+  final String brand;
 
   CarOrderService({
     required this.id,
@@ -15,5 +17,7 @@ class CarOrderService {
     required this.deliveryTime,
     required this.status,
     required this.modelo,
+    required this.line,
+    required this.brand,
   });
 }
