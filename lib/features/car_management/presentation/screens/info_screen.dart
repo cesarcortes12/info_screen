@@ -14,7 +14,7 @@ Color getColorForStatus(String state) {
     case 'Orden de taller':
       return Color.fromARGB(255, 161, 170, 221);
 
-    case 'en ejecucion':
+    case 'Proceso':
       return Color.fromARGB(205, 253, 186, 0);
 
     case 'pausado':
