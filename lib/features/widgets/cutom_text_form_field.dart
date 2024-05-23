@@ -35,7 +35,7 @@ class CustomTextFormField extends StatelessWidget {
     this.onTap,
     this.readOnly = false,
     this.colors,
-    this.floatingLabelBehavior,
+    this.floatingLabelBehavior = FloatingLabelBehavior.auto,
     this.height,
     this.width,
   });
@@ -47,7 +47,7 @@ class CustomTextFormField extends StatelessWidget {
     const border = OutlineInputBorder(
       borderSide: BorderSide(color: Color(0xFFFFFFFF)),
       borderRadius: BorderRadius.all(
-        Radius.circular(14.0),
+        Radius.circular(10.0),
       ),
     );
 
@@ -87,7 +87,14 @@ class CustomTextFormField extends StatelessWidget {
           obscureText: obscureText,
           keyboardType: keyboardType,
           decoration: InputDecoration(
+            contentPadding: EdgeInsets.symmetric(vertical: 0.8, horizontal: 10),
             floatingLabelBehavior: floatingLabelBehavior,
+            floatingLabelStyle: const TextStyle(
+              color: Colors.black,
+              fontWeight: FontWeight.normal,
+              fontSize: 18,
+              height: 4.0,
+            ),
             //floatingLabelStyle: const TextStyle(
             //  color: Colors.black, fontWeight: FontWeight.bold, fontSize: 18),
             enabledBorder: border,
@@ -107,7 +114,7 @@ class CustomTextFormField extends StatelessWidget {
         ),
       ),
       Padding(
-          padding: const EdgeInsets.only(top: 8.0),
+          padding: const EdgeInsets.only(top: 8.0, bottom: 4.0),
           child: Container(
             //margin: EdgeInsets.only(right: 40.0),
             child: errorMessage != null

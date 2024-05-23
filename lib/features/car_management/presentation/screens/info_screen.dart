@@ -112,8 +112,7 @@ class _InfoScreenState extends State<InfoScreen> {
               );
             } else {
               return (carManagementCubit.state.citas['orders'].isEmpty)
-                  ? const CustomEmptyState(
-                      message: 'No hay bodegas para mostrar')
+                  ? const CustomEmptyState(message: 'No hay citas para mostrar')
                   : Container(
                       height: constraints.maxHeight,
                       width: constraints.maxWidth,
@@ -364,7 +363,7 @@ class _CardInfo2 extends StatelessWidget {
             ),
             Positioned(
               left: size.width * 0.045,
-              top: size.height * 0.18,
+              top: size.height * 0.15,
               child: Container(
                 width: size.width * 0.28,
                 height: size.width * 0.18,
@@ -428,24 +427,22 @@ class _CardInfo2 extends StatelessWidget {
                             ),
                             Container(
                               margin: EdgeInsets.symmetric(horizontal: 10),
-                              child: Expanded(
-                                child: Text(
-                                  textAlign: TextAlign.center,
-                                  '${carOrderService.name}',
-                                  maxLines: 2,
-                                  overflow: TextOverflow.ellipsis,
-                                  style: TextStyle(
-                                    fontSize: constraints.maxWidth * 0.08,
-                                    fontWeight: FontWeight.w400,
-                                    color: Color.fromARGB(255, 255, 255, 255),
-                                    shadows: [
-                                      Shadow(
-                                        offset: Offset(2.0, 2.0),
-                                        blurRadius: 4.0,
-                                        color: Color.fromARGB(128, 0, 0, 0),
-                                      ),
-                                    ],
-                                  ),
+                              child: Text(
+                                textAlign: TextAlign.center,
+                                '${carOrderService.name}',
+                                maxLines: 2,
+                                overflow: TextOverflow.ellipsis,
+                                style: TextStyle(
+                                  fontSize: constraints.maxWidth * 0.08,
+                                  fontWeight: FontWeight.w400,
+                                  color: Color.fromARGB(255, 255, 255, 255),
+                                  shadows: [
+                                    Shadow(
+                                      offset: Offset(2.0, 2.0),
+                                      blurRadius: 4.0,
+                                      color: Color.fromARGB(128, 0, 0, 0),
+                                    ),
+                                  ],
                                 ),
                               ),
                             ),
