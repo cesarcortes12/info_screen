@@ -3,7 +3,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:go_router/go_router.dart';
 import 'package:pantalla_informativa/features/car_management/domain/entities/warehouse.dart';
+import 'package:pantalla_informativa/features/car_management/presentation/cubit/auth_cubit/auth_cubit.dart';
 import 'package:pantalla_informativa/features/car_management/presentation/cubit/car_management/car_management_cubit.dart';
+//import 'package:pantalla_informativa/features/car_management/presentation/presentation.dart';
 import 'package:pantalla_informativa/features/widgets/custom_filled_button.dart';
 
 class WorkshopListScreen extends StatefulWidget {
@@ -15,17 +17,28 @@ class WorkshopListScreen extends StatefulWidget {
 
 class _WorkshopListScreenState extends State<WorkshopListScreen> {
   late CarManagementCubit carManagementCubit;
+  late AuthCubit authCubit;
 
   void initState() {
     super.initState();
     carManagementCubit = BlocProvider.of<CarManagementCubit>(context);
     carManagementCubit.getWarehouses(false);
+    authCubit = BlocProvider.of<AuthCubit>(context);
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        actions: [
+          IconButton(
+            icon: Icon(Icons.logout),
+            onPressed: () {
+              authCubit.logout();
+              GoRouter.of(context).push('/');
+            },
+          ),
+        ],
         title: Center(
           child: Text(
             'BODEGAS',
