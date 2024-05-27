@@ -44,73 +44,46 @@ class CustomTextFormField extends StatelessWidget {
   Widget build(BuildContext context) {
     final textStyles = Theme.of(context).textTheme;
 
-    const border = OutlineInputBorder(
-      borderSide: BorderSide(color: Color(0xFFFFFFFF)),
-      borderRadius: BorderRadius.all(
-        Radius.circular(10.0),
-      ),
+    final border = OutlineInputBorder(
+      //borderSide: BorderSide(color: Color(0xFFFFFFFF)),
+      borderRadius: BorderRadius.circular(20),
     );
 
-    const borderRadius = Radius.circular(15);
-
     return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-      Container(
-        width: width,
-        height: height ?? 60,
-        // padding: const EdgeInsets.only(bottom: 0, top: 15),
-        decoration: BoxDecoration(
-          border: Border.all(
-            color: const Color.fromARGB(255, 75, 90, 103), // Color del borde
-            width: 0.5, // Ancho del borde
+      TextFormField(
+        readOnly: readOnly,
+        onTap: onTap,
+        controller: controller,
+        maxLines: maxLine,
+        onChanged: onChanged,
+        validator: validator,
+        onFieldSubmitted: onFieldSubmitted,
+        obscureText: obscureText,
+        keyboardType: keyboardType,
+        decoration: InputDecoration(
+          contentPadding: EdgeInsets.symmetric(vertical: 0.8, horizontal: 10),
+          floatingLabelBehavior: floatingLabelBehavior,
+          floatingLabelStyle: const TextStyle(
+            color: Colors.black,
+            fontWeight: FontWeight.normal,
+            fontSize: 18,
+            height: 4.0,
           ),
-          color: colors ?? Colors.white,
-          borderRadius: const BorderRadius.only(
-              topLeft: borderRadius,
-              bottomLeft: borderRadius,
-              bottomRight: borderRadius,
-              topRight: borderRadius),
-          /*boxShadow: [
-            BoxShadow(
-                color: Colors.black.withOpacity(0.06),
-                blurRadius: 10,
-                offset: const Offset(0, 5))
-          ],*/
-        ),
-        child: TextFormField(
-          readOnly: readOnly,
-          onTap: onTap,
-          controller: controller,
-          maxLines: maxLine,
-          onChanged: onChanged,
-          validator: validator,
-          onFieldSubmitted: onFieldSubmitted,
-          obscureText: obscureText,
-          keyboardType: keyboardType,
-          decoration: InputDecoration(
-            contentPadding: EdgeInsets.symmetric(vertical: 0.8, horizontal: 10),
-            floatingLabelBehavior: floatingLabelBehavior,
-            floatingLabelStyle: const TextStyle(
-              color: Colors.black,
-              fontWeight: FontWeight.normal,
-              fontSize: 18,
-              height: 4.0,
-            ),
-            //floatingLabelStyle: const TextStyle(
-            //  color: Colors.black, fontWeight: FontWeight.bold, fontSize: 18),
-            enabledBorder: border,
-            focusedBorder: border,
-            border: border,
-            errorBorder: border.copyWith(
-                borderSide: const BorderSide(color: Colors.transparent)),
-            focusedErrorBorder: border.copyWith(
-                borderSide: const BorderSide(color: Colors.transparent)),
-            label: label != null ? Text(label!) : null,
-            hintText: hint ?? '',
-            //hintText: hint,
-            //labelStyle: textStyle,
-            //errorText: errorMessage,
-            //focusColor: colors.primary,
-          ),
+          //floatingLabelStyle: const TextStyle(
+          //  color: Colors.black, fontWeight: FontWeight.bold, fontSize: 18),
+          enabledBorder: border,
+          focusedBorder: border,
+          border: border,
+          errorBorder: border.copyWith(
+              borderSide: const BorderSide(color: Colors.transparent)),
+          focusedErrorBorder: border.copyWith(
+              borderSide: const BorderSide(color: Colors.transparent)),
+          label: label != null ? Text(label!) : null,
+          hintText: hint ?? '',
+          //hintText: hint,
+          //labelStyle: textStyle,
+          //errorText: errorMessage,
+          //focusColor: colors.primary,
         ),
       ),
       Padding(
