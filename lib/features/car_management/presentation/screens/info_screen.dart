@@ -123,7 +123,29 @@ class _InfoScreenState extends State<InfoScreen> {
                 ),
               );
             } else {
-              return (carManagementCubit.state.citas['orders'].isEmpty)
+              return (carManagementCubit.state.loadedInfo ==
+                      LoadingStatus.checking)
+                  ? Center(
+                      child: const CircularProgressIndicator(strokeWidth: 4))
+                  : (carManagementCubit.state.citas['orders'].isEmpty)
+                      ? CustomEmptyState(message: 'No hay bodegas para mostrar')
+                      : Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Expanded(
+                              flex: 6,
+                              child: _CardInfo(
+                                  carManagementCubit: carManagementCubit),
+                            ),
+                            Expanded(
+                              flex: 4,
+                              child: _CardInfo2(
+                                carOrderService: carManagementCubit
+                                    .state.citas['nextDelivery'],
+                              ),
+                            )
+                          ],
+                        ); /*(carManagementCubit.state.citas['orders'].isEmpty)
                   ? const CustomEmptyState(message: 'No hay citas para mostrar')
                   : Container(
                       height: constraints.maxHeight,
@@ -145,7 +167,7 @@ class _InfoScreenState extends State<InfoScreen> {
                           )
                         ],
                       ),
-                    );
+                    );*/
             }
           });
         },

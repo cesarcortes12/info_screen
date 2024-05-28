@@ -49,15 +49,46 @@ class _WorkshopListScreenState extends State<WorkshopListScreen> {
       body: BlocBuilder<CarManagementCubit, CarManagementState>(
         builder: (context, state) {
           return (carManagementCubit.state.loaded == LoadingStatus.checking)
-              ? const CircularProgressIndicator(strokeWidth: 4)
+              ? Center(child: const CircularProgressIndicator(strokeWidth: 4))
               : SingleChildScrollView(
                   child: Align(
-                    alignment: Alignment.topCenter,
-                    child: Container(
-                        width: 800,
-                        margin: const EdgeInsets.symmetric(
-                            horizontal: 10, vertical: 10),
-                        child: (carManagementCubit.state.allWarehouses.isEmpty)
+                      alignment: Alignment.topCenter,
+                      child: Container(
+                          width: 800,
+                          margin: const EdgeInsets.symmetric(
+                              horizontal: 10, vertical: 10),
+                          child: (carManagementCubit.state.loaded ==
+                                  LoadingStatus.checking)
+                              ? Center(
+                                  child: Container(
+                                    padding: const EdgeInsets.all(30),
+                                    child: const CircularProgressIndicator(
+                                        strokeWidth: 4),
+                                  ),
+                                )
+                              : Container(
+                                  child: Column(
+                                  children: [
+                                    (carManagementCubit
+                                            .state.allWarehouses.isEmpty)
+                                        ? const CustomEmptyState(
+                                            message:
+                                                'No hay bodegas para mostrar')
+                                        : ListView.builder(
+                                            shrinkWrap: true,
+                                            physics:
+                                                NeverScrollableScrollPhysics(),
+                                            itemCount:
+                                                state.allWarehouses.length,
+                                            itemBuilder: (BuildContext context,
+                                                int index) {
+                                              Warehouse wareHouse =
+                                                  state.allWarehouses[index];
+                                              return WarehouseCard(
+                                                  warehouse: wareHouse);
+                                            })
+                                  ],
+                                ) /*(carManagementCubit.state.allWarehouses.isEmpty)
                             ? const CustomEmptyState(
                                 message: 'No hay bodegas para mostrar')
                             : ListView.builder(
@@ -68,9 +99,8 @@ class _WorkshopListScreenState extends State<WorkshopListScreen> {
                                   Warehouse wareHouse =
                                       state.allWarehouses[index];
                                   return WarehouseCard(warehouse: wareHouse);
-                                },
-                              )),
-                  ),
+                                },*/
+                                  ))),
                 );
         },
       ),
@@ -261,7 +291,7 @@ class _TabButton extends StatelessWidget {
           SvgPicture.asset(
             svgPicture,
             width: 26,
-            color: Color.fromARGB(255, 255, 255, 255),
+            color: const Color.fromARGB(255, 255, 255, 255),
           ),
           Text(
             message,

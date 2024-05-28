@@ -7,6 +7,8 @@ class CarManagementState /*extends Equatable*/ {
   final dynamic carsOrderService;
   final Map<String, dynamic> citas;
   final LoadingStatus? loaded;
+  final LoadingStatus? loadedInfo;
+
   final Warehouse? warehouse;
 
   CarManagementState({
@@ -14,6 +16,7 @@ class CarManagementState /*extends Equatable*/ {
     this.allWarehouses = const [],
     this.carsOrderService,
     this.loaded = LoadingStatus.initial,
+    this.loadedInfo = LoadingStatus.initial,
     this.warehouse,
   });
 
@@ -22,6 +25,7 @@ class CarManagementState /*extends Equatable*/ {
     List<Warehouse>? allWarehouses,
     dynamic carsOrderService,
     LoadingStatus? loaded,
+    LoadingStatus? loadedInfo,
     Warehouse? warehouse,
   }) =>
       CarManagementState(
@@ -29,6 +33,7 @@ class CarManagementState /*extends Equatable*/ {
         allWarehouses: allWarehouses ?? this.allWarehouses,
         carsOrderService: carsOrderService ?? this.carsOrderService,
         loaded: loaded ?? this.loaded,
+        loadedInfo: loadedInfo ?? this.loadedInfo,
         warehouse: warehouse ?? this.warehouse,
       );
 

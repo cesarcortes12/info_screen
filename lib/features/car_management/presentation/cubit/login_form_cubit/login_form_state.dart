@@ -2,7 +2,7 @@ part of 'login_form_cubit.dart';
 
 enum FormStatus { invalid, valid, validating, posting }
 
-enum LoadingStatus { initial, checking, success }
+//enum LoadingStatus { initial, checking, success }
 
 class LoginFormState {
   final bool isFormValid;

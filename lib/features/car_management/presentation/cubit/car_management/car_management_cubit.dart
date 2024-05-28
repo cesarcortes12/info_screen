@@ -30,13 +30,13 @@ class CarManagementCubit extends Cubit<CarManagementState> {
 
   Future<void> getOrderCars(int idWorkShop) async {
     try {
-      emit(state.copyWith(loaded: LoadingStatus.checking));
+      emit(state.copyWith(loadedInfo: LoadingStatus.checking));
 
       dynamic carsOrderService =
           await carOrderServiceRepositoryimpl.getCarsOrderService(idWorkShop);
 
       emit(state.copyWith(citas: carsOrderService));
-      emit(state.copyWith(loaded: LoadingStatus.success));
+      emit(state.copyWith(loadedInfo: LoadingStatus.success));
     } catch (e) {
       print('Error al obtener department en el evento LabelsEvent: $e');
     }

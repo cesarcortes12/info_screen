@@ -61,7 +61,8 @@ class CustomTextFormField extends StatelessWidget {
         obscureText: obscureText,
         keyboardType: keyboardType,
         decoration: InputDecoration(
-          contentPadding: EdgeInsets.symmetric(vertical: 0.8, horizontal: 10),
+          contentPadding:
+              const EdgeInsets.symmetric(vertical: 0.8, horizontal: 10),
           floatingLabelBehavior: floatingLabelBehavior,
           floatingLabelStyle: const TextStyle(
             color: Colors.black,

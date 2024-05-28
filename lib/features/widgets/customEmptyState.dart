@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 class CustomEmptyState extends StatelessWidget {
   final String message;
 
-  const CustomEmptyState({Key? key, required this.message}) : super(key: key);
+  const CustomEmptyState({super.key, required this.message});
 
   @override
   Widget build(BuildContext context) {
