@@ -137,10 +137,10 @@ class _WarehouseCardState extends State<WarehouseCard> {
                             fontWeight: FontWeight.bold,
                           ),
                         ),
-                        Text(' ${widget.warehouse.name}',
-                            style: TextStyle(
-                                //color: Colors.white
-                                )),
+                        // Text(' ${widget.warehouse.name}',
+                        //   style: TextStyle(
+                        //color: Colors.white
+                        //    )),
                         Text(' ${widget.warehouse.city}',
                             style: TextStyle(
                                 //color: Colors.white

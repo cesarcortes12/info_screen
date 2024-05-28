@@ -169,7 +169,7 @@ class _CardInfo extends StatelessWidget {
       padding: EdgeInsets.all(30),
       width: size.width * 0.4,
       child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-        Text('Vehiculo A Entregar',
+        Text('Vehículo a entregar',
             style: TextStyle(
                 fontSize: 40,
                 fontFamily: 'Poppins',
@@ -319,7 +319,7 @@ class _CardInfo2 extends StatelessWidget {
         child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
           FittedBox(
             fit: BoxFit.scaleDown,
-            child: Text('Proximo Vehiculo A Entregar',
+            child: Text('Próximo vehículo a entregar',
                 style: TextStyle(
                     fontSize: 40,
                     fontFamily: 'Poppins',
