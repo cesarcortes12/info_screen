@@ -124,8 +124,7 @@ class _InfoScreenState extends State<InfoScreen> {
               );
             } else {
               return (carManagementCubit.state.citas['orders'].isEmpty)
-                  ? const CustomEmptyState(
-                      message: 'No hay bodegas para mostrar')
+                  ? const CustomEmptyState(message: 'No hay citas para mostrar')
                   : Container(
                       height: constraints.maxHeight,
                       width: constraints.maxWidth,

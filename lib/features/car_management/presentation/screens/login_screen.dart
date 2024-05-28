@@ -27,7 +27,7 @@ class LoginScreen extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Container(
-                          height: 470,
+                          height: 490,
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.only(
                               topLeft: Radius.circular(30),
@@ -59,7 +59,7 @@ class LoginScreen extends StatelessWidget {
                         //const SizedBox(width: 30),
                         Container(
                             width: 500,
-                            height: 470,
+                            height: 490,
                             padding: EdgeInsets.all(30),
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.only(
@@ -155,7 +155,7 @@ class _LoginForm extends StatelessWidget {
             style: textStyles.headlineSmall!.copyWith(
                 color: Color(0xFF27499b), fontWeight: FontWeight.bold),
           ),
-          const SizedBox(height: 10),
+          const SizedBox(height: 20),
           CustomTextFormField(
             label: 'Empresa',
             keyboardType: TextInputType.text,
